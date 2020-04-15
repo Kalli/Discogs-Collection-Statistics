@@ -1,0 +1,255 @@
+.main{
+    height:200px;
+}
+
+body{
+    font-size: 16px;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#intro {
+    height: 100vh;
+    background: url('montage.jpg') center;
+    background-attachment: fixed;
+    background-size: cover;
+    padding: 10rem 1rem 1rem 1rem;
+}
+
+.interlude{
+    height: 10vh;
+    width: 100%;
+    background: url('montage.jpg') center;
+    background-attachment: fixed;
+}
+
+.intro-text{
+    background: #ffffff;
+    border-radius:15px;
+    margin-top: 5rem;
+}
+
+.release-thumb{
+    width: 150px;
+    height: 150px;
+}
+
+.get-started {
+    margin-top: 50px;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+.scroll-arrow {
+    animation: bounce 0.8s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    text-shadow: 1px 1px 1px #ccc;
+}
+
+.content{
+    margin-top: 1.5em;
+    font-size: 130%;
+}
+
+.chart-tooltip{
+    min-width: 200px;
+}
+
+.chart-tooltip h4{
+    text-align: center;
+}
+
+.label{
+    margin: 5px;
+}
+
+.chart-controls label{
+    margin-right: 10px;
+}
+.chart-controls{
+    font-size: 0.8em;
+    padding-bottom: 1em;
+}
+
+.haves-wants-tooltip {
+    max-width: 250px;
+    min-width: 250px;
+    font-size: 1.5em;
+    padding: 10px;
+    display: flex;
+}
+
+.haves-wants-tooltip .thumbnail{
+    border: 0;
+    flex-basis: auto; /* default value */
+    flex-grow: 1;
+}
+
+.haves-wants-tooltip span{
+    margin-right: 1em;
+}
+
+.artist-tooltip{
+    max-width: 500px;
+    max-height: 500px;
+    font-size: 1.5em;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.artist-tooltip .artist{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.artist-tooltip .releases{
+    overflow-y: auto;
+}
+
+.content h2{
+    text-align: center;
+}
+
+.genres-tooltip{
+    background:#fff;
+    padding:10px;
+}
+
+.genres-tooltip ul, .decade-tooltip div, .country-tooltip ol, .gender-tooltip ol{
+    max-height: 500px;
+    max-width: 500px;
+    overflow-y: auto;
+    font-size: 1em;
+}
+
+/* Hides the default Google Chart Tooltips on the Map chart */
+#artists-by-country .google-visualization-tooltip-item-list > li:nth-of-type(1){
+    display: none;
+}
+
+#artists-by-country .google-visualization-tooltip{
+    width: 400px;
+    font-size: 14px !important;
+}
+
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+    display: flex !important;
+    flex-wrap: wrap;
+}
+
+.show{
+    display: flex!important;
+}
+
+.content{
+    margin: 0 auto;
+}
+
+.section{
+    padding-top: 8rem;
+}
+
+.section h2{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.navbar{
+    background-color: white;
+    -webkit-box-shadow: 0 0 7px 1px #c9c9c9;
+    box-shadow: 0 0 7px 1px #c9c9c9;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.footer{
+    position: fixed;
+    margin-bottom: 20px;
+    bottom: 0;
+}
+
+/* react-burger-menu - https://github.com/negomi/react-burger-menu#styling*/
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+    position: fixed;
+    width: 24px;
+    height: 20px;
+    left: 24px;
+    top: 24px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+    background: #373a47;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+    background: #a90000;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+    height: 24px;
+    width: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+    background: #bdc3c7;
+}
+
+/*
+Sidebar wrapper styles
+Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+*/
+.bm-menu-wrap {
+    position: fixed;
+    height: 100%;
+}
+
+/* General sidebar styles */
+.bm-menu {
+    background: #373a47;
+    padding: 2.5em 1.5em 0;
+    font-size: 1.15em;
+    z-index: 100;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+    fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+    color: #b8b7ad;
+    padding: 0.8em;
+}
+
+/* Individual item */
+.bm-item {
+    display: inline-block;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
+}

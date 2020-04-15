@@ -1,0 +1,39 @@
+{
+  "name": "Collection-Stats",
+  "description": "Visualisations of Discogs collection statistics",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Karl Tryggvason <ktryggvason@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "webpack",
+    "test": "jest",
+    "start": "webpack-dev-server --progress --inline"
+  },
+  "dependencies": {
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "copy-webpack-plugin": "^4.5.4",
+    "css-loader": "^3.1.0",
+    "intersection-observer": "^0.7.0",
+    "react": "^16.8.6",
+    "react-animate-height": "^2.0.20",
+    "react-burger-menu": "^2.6.13",
+    "react-dom": "^16.8.6",
+    "react-google-charts": "^3.0.14",
+    "react-scrollama": "^2.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.21.0",
+    "webpack-cli": "^3.1.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "jest": "^23.6.0",
+    "webpack-dev-server": "^3.1.9"
+  }
+}
