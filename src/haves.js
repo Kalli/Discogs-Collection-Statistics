@@ -8,9 +8,11 @@ import {GraphicComponent, styles} from './graphic.js'
 
 
 class HavesAndWants extends GraphicComponent {
+
 	constructor(props) {
-		super(props);
-		this.state = {sort: "have", type: "community"}
+		super(props)
+		const offset = this.props.offset? this.props.offset : false
+		this.state = {sort: "have", type: "community", offset: offset}
 	}
 
 	sort = (e) => {
@@ -190,9 +192,10 @@ class HavesAndWants extends GraphicComponent {
 				</label>
 			</div>
 		const legend = this.state.type === "versions" ? 'none' : { position: 'bottom' }
+
 		return (
 			<div id="haves-and-wants" className={"col-xs-12 col-md-12 parent"}>
-				<div className={classnames(classes.graphic, "col-xs-12 col-md-8 col-md-push-4 section graphic")}>
+				<div className={classnames(classes.graphic, this.graphicClassNames())}>
 					<h2>Haves and Wants</h2>
 					<div className={"col-xs-12"}>
 						<Chart

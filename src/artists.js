@@ -7,9 +7,11 @@ import {GraphicComponent, styles} from './graphic.js'
 
 
 class Artists extends GraphicComponent {
+
 	constructor(props) {
 		super(props);
-		this.state = {sort: "have", size: 0, intervalId: null, changeSize: false}
+		const offset = this.props.offset? this.props.offset : false
+		this.state = {sort: "have", size: 0, intervalId: null, changeSize: false, offset}
 	}
 
 	sort = (e) => {
@@ -116,8 +118,8 @@ class Artists extends GraphicComponent {
 							also those that have the most releases.
 						</p>
 						<p>
-							This makes sense, it would take a serious one hit wonder for its wants and haves to
-							outweigh the cumulative wants and have of artists with many releases in the top list.
+							This makes sense, only a serious one hit wonder release could outweigh the cumulative
+							wants and have of artists with many releases in the top list.
 						</p>
 				</>
 			}
@@ -221,8 +223,7 @@ class Artists extends GraphicComponent {
 			return data
 		}, [])
 
-		const indices = this.state.sort === "haves-wants" ? ['have', 'want'] : [1, 3]
-		const correlation = pearsonCorrelation(artists.map(x => x[indices[0]]), artists.map(x => x[indices[1]])).toFixed(2)
+		const correlation = pearsonCorrelation(artists.map(x => x.have), artists.map(x => x.want)).toFixed(2)
 		const scrollama = this.createScrollama(this.getSteps(artists, averageWantToHave, correlation))
 
 		const title = `Most Collected ${this.props.genre} Master Releases - By Artist `
@@ -267,7 +268,7 @@ class Artists extends GraphicComponent {
 		const duration = (0 === this.state.size || this.state.size === 100) ? 1000 : 0
 		return (
 			<div id="artists" className={"col-xs-12 col-md-12"}>
-				<div className={classnames(classes.graphic, "col-xs-12 col-md-8 section")}>
+				<div className={classnames(classes.graphic, this.graphicClassNames())}>
 				<h2>Artists</h2>
 				<div className={"col-xs-12"}>
 					<Chart

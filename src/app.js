@@ -111,7 +111,7 @@ class App extends Component{
 		const genreName = selectedGenre[0] !== "All Genres" ? selectedGenre[0] : ""
 
 		const header = this.navbar(genres)
-		const havesAndWants = !this.state.loading && <StyledHavesAndWants data={this.state.data} genre={genreName} />
+		const havesAndWants = !this.state.loading && <StyledHavesAndWants data={this.state.data} genre={genreName}  offset={true} />
 		const artists = !this.state.loading && <StyledArtists data={this.state.data} genre={genreName} />
 		const genresAndStyles = !this.state.loading && <StyledGenresAndStyles data={this.state.data} genre={genreName} />
 		const decades = !this.state.loading && <StyledDecades data={this.state.data} genre={genreName}/>

@@ -15,19 +15,23 @@ export class GraphicComponent extends Component {
 		element.style.backgroundColor = '#fff';
 	}
 
+	graphicClassNames(){
+    	return "col-xs-12 col-md-8 section " + (this.state.offset? "col-md-push-4" : "")
+	}
 
 	createScrollama(stepsData){
-		const steps = stepsData.map((step) => {
+		const steps = stepsData.map((step, index) => {
 			return (
-			<Step data={step.data}>
+			<Step key={index} data={step.data}>
 				<div className={classnames(this.props.classes.step, "step")}>
 					{step.paragraphs}
 				</div>
 			</Step>
 		)})
 
+		const classNames = "col-xs-12 col-md-4 scroller" + (this.state.offset? " col-md-pull-8" : "")
         return (
-            <div className={classnames(this.props.classes.scroller, "col-xs-12 col-md-4 col-md-pull-8 scroller")}>
+            <div className={classnames(this.props.classes.scroller, classNames)}>
 				<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.33}>
 					{steps}
 				</Scrollama>
