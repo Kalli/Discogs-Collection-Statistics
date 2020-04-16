@@ -1,3 +1,7 @@
+import {Step} from "react-scrollama"
+import React from "react"
+import classnames from 'classnames'
+
 export function createArtistLink(artists){
 	return artists.reduce(function(artistLink, artist, idx){
 		const join = idx + 1 < artists.length ? artist.join : ''
@@ -109,4 +113,16 @@ export function correlationCopy(correlation){
 		return 'moderate'
 	}
 	return 'weak'
+}
+
+export function createSteps(classes, stepsData){
+	return stepsData.map((step) => {
+			return (
+			<Step data={step.data}>
+				<div className={classnames(classes.step, "step")}>
+					{step.paragraphs}
+				</div>
+			</Step>
+		)}
+	)
 }

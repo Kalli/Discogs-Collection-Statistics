@@ -1,7 +1,8 @@
 import {Chart} from 'react-google-charts';
 import React, { Component} from "react"
-import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink, correlationCopy, pearsonCorrelation} from "./lib.js"
-import { Scrollama, Step } from 'react-scrollama';
+import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink, correlationCopy} from "./lib.js"
+import {pearsonCorrelation, createSteps} from "./lib.js"
+import { Scrollama } from 'react-scrollama';
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
 
@@ -16,6 +17,7 @@ const styles = {
 		flexBasis: '10%',
 	},
 	step: {
+		'border-radius': '15px',
 		margin: '0 auto 2rem auto',
 		paddingTop: 100,
 		paddingBottom: 100,
@@ -60,6 +62,93 @@ class HavesAndWants extends Component {
 		element.style.backgroundColor = '#fff';
 	}
 
+	createScrollama(classes, masters, correlation, averageWantToHave){
+		const steps = createSteps(classes, [
+			{
+				data: {'sort': 'have', 'type': 'community'},
+				paragraphs: <>
+					<p>
+						The first chart shows the top 250 most collected releases ordered by the number of collections they appear in.
+						Mouse over the chart to get more information on each data point.
+						In first place we've got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[0])}} /> by
+						<span dangerouslySetInnerHTML={{__html: createArtistLink(masters[0].artists)}} /> which can be
+						found in {formatNumber(masters[0].community.have)} collections.
+					</p>
+					<p>
+						The <span style={{"color": "#5e97f6"}}>blue</span> points mark how many collections a release has been added to while
+						the <span style={{"color": "#db4437"}}>red</span> points
+						show how many wantlists the release can be found in.
+						You can click on each point to see more information about that release.
+					</p>
+					<p>
+						You can see that this chart follows a <a href="https://en.wikipedia.org/wiki/Long_tail" target="_blank">long tail</a> distribution.
+						A few releases at the top can be found in way more collections than the majority of the other releases.
+						After this initial peak the decline is slow but steady.
+						As you'd expect the most collected records in the more obscure genres are dwarfed by the bigger hits of more mainstream fare.
+					</p>
+			</>
+			},{
+				data: {'sort': 'want', 'type': 'community'},
+				paragraphs: <>
+					<p>
+						Let's change the sorting to <i>wants</i> (the number of times a master release appears in users
+						want lists). For some releases the demand seems to far outweigh the supply, while for others
+						its vice versa.
+					</p>
+					<p>
+						Here <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[0])}} /> by
+						<span dangerouslySetInnerHTML={{__html: createArtistLink(masters[0].artists)}} /> tops the list
+						with {formatNumber(masters[0].community.want)} wantlist additions. After that we've
+						got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[1])}} />
+						by <span dangerouslySetInnerHTML={{__html: createArtistLink(masters[1].artists)}} /> and
+						the bronze is taken by <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[2])}} />.
+					</p>
+					<p>
+						The average want to have ratio is {averageWantToHave} and the correlation between wants
+						and haves is {correlation}, a {correlationCopy(correlation)} correlation. This is
+						apparent from the graph as well.
+					</p>
+				</>
+			}, {
+				data: {'sort': 'have', 'type': 'versions'},
+				paragraphs:	<>
+					<p>
+						Now we've plotted the collection numbers against the number of versions for each release.
+						Each version of a master release is a specific physical release and some of the releases
+						have hundreds of versions.
+					</p>
+					<p>
+						For instance there are over 900 versions of Pink
+						Floyds <a target="_blank" href="https://www.discogs.com/master/10362"><em>The Dark Side of the Moon</em></a> catalogued
+						on Discogs. These include pressings from different countries, different formats (vinyl, cd,
+						cassette and more esoteric ones) and then there are limited editions, represses, anniversary
+						reissues and so on and so forth.
+					</p>
+					<p>
+						Here releases that are in more wantlists than in collections
+						are <span style={{"color": "#db4437"}}>red</span> while releases that are in more collections
+						than in wantlists are <span style={{"color": "#5e97f6"}}>blue</span>.
+					</p>
+					<p>
+						The correlation between the number of versions and collection additions is {correlation},
+						a {correlationCopy(correlation)} correlation. At first you might assume that more versions
+						would always mean more collection placements and wantlist additions, but that does not hold for
+						all genres. Some releases have been reissued many times but in small runs, while others
+						had big initial releases but not a lot of subsequent interest.
+					</p>
+				</>
+			}
+		])
+
+		return (
+			<div className={classnames(classes.scroller, "col-xs-12 col-md-4 col-md-pull-8 scroller")}>
+				<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.33}>
+					{steps}
+				</Scrollama>
+			</div>
+		)
+	}
+
 	render(){
 		const { classes } = this.props;
 		let headers
@@ -95,7 +184,6 @@ class HavesAndWants extends Component {
 			return b.community[this.state.sort] - a.community[this.state.sort]
 		})
 
-		const averageWantToHave = parseFloat(masters.reduce((acc, e) => acc + e.community.want/e.community.have, 0) / masters.length, 2).toFixed(2)
 
 
 		const data = masters.reduce((data, master, index) => {
@@ -112,6 +200,9 @@ class HavesAndWants extends Component {
 
 		const indices = this.state.type === "versions" ? [0, 1] : [1, 3]
 		const correlation = pearsonCorrelation(data.map(x => x[indices[0]]), data.map(x => x[indices[1]])).toFixed(2)
+		const averageWantToHave = parseFloat(masters.reduce((acc, e) => acc + e.community.want/e.community.have, 0) / masters.length, 2).toFixed(2)
+
+		const scrollama = this.createScrollama(classes, masters, correlation, averageWantToHave)
 
 		if (this.state.type === "versions"){
 			hAxis.viewWindow = {min: data[data.length - 1][0]}
@@ -145,112 +236,40 @@ class HavesAndWants extends Component {
 			</div>
 		const legend = this.state.type === "versions" ? 'none' : { position: 'bottom' }
 		return (
-			<div id="haves-and-wants" className={"col-xs-12 col-md-12"}>
-				<div className={classnames(classes.scroller, "col-xs-12 col-md-4")}>
-					<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.33}>
-					<Step data={{'sort': 'have', 'type': 'community'}}>
-						<div className={classes.step}>
-							<p>
-								The first chart shows the top 250 most collected releases ordered by the number of collections they appear in.
-								Mouse over the chart to get more information on each data point.
-								In first place we've got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[0])}} /> by
-								<span dangerouslySetInnerHTML={{__html: createArtistLink(masters[0].artists)}} /> which can be
-								found in {formatNumber(masters[0].community.have)} collections.
-							</p>
-							<p>
-								The <span style={{"color": "#5e97f6"}}>blue</span> points mark how many collections a release has been added to while
-								the <span style={{"color": "#db4437"}}>red</span> points
-								show how many wantlists the release can be found in.
-								You can click on each point to see more information about that release.
-							</p>
-							<p>
-								You can see that this chart follows a <a href="https://en.wikipedia.org/wiki/Long_tail" target="_blank">long tail</a> distribution.
-								A few releases at the top can be found in way more collections than the majority of the other releases.
-								After this initial peak the decline is slow but steady.
-								As you'd expect the most collected records in the more obscure genres are dwarfed by the bigger hits of more mainstream fare.
-							</p>
-						</div>
-					</Step>
-					<Step data={{'sort': 'want', 'type': 'community'}} >
-						<div className={classes.step}>
-							<p>
-								Let's change the sorting to <i>wants</i> (the number of times a master release appears in users want lists).
-								For some releases the demand seems to far outweigh the supply, while for others its vice versa.
-							</p>
-							<p>
-								Here <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[0])}} /> by
-								<span dangerouslySetInnerHTML={{__html: createArtistLink(masters[0].artists)}} /> tops the list
-								with {formatNumber(masters[0].community.want)} wantlist additions. After that we've
-								got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[1])}} /> by <span dangerouslySetInnerHTML={{__html: createArtistLink(masters[1].artists)}} />
-								 and the bronze is taken by <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[2])}} />.
-							</p>
-							<p>
-								The average want to have ratio is {averageWantToHave} and the correlation between wants
-								and haves is {correlation}, a {correlationCopy(correlation)} correlation. This is
-								apparent from the graph as well.
-							</p>
-						</div>
-					</Step>
-					<Step data={{'sort': 'have', 'type': 'versions'}}>
-						<div className={classes.step}>
-							<p>
-								Now we've plotted the collection numbers against the number of versions for each release.
-								Each version of a master release is a specific physical release and some of the releases
-								have hundreds of versions.
-							</p>
-							<p>
-								For instance there are over 900 versions of Pink
-								Floyds <a target="_blank" href="https://www.discogs.com/master/10362"><em>The Dark Side of the Moon</em></a> catalogued on Discogs.
-								These include pressings from different countries, different formats (vinyl, cd, cassette and more esoteric ones)
-								and then there are limited editions, represses, anniversary reissues and so on and so forth.
-							</p>
-							<p>
-								Here releases that are in more wantlists than in collections are <span style={{"color": "#db4437"}}>red</span> while
-								releases that are in more collections than in wantlists are <span style={{"color": "#5e97f6"}}>blue</span>.
-							</p>
-							<p>
-								The correlation between the number of versions and collection additions is {correlation},
-								a {correlationCopy(correlation)} correlation. At first you might assume that more versions
-								would always mean more collection placements and wantlist additions, but that does not hold for
-								all genres. Some releases have been reissued many times but in small runs, while others
-								had big initial releases but not a lot of subsequent interest.
-							</p>
-						</div>
-					</Step>
-					</Scrollama>
+			<div id="haves-and-wants" className={"col-xs-12 col-md-12 parent"}>
+				<div className={classnames(classes.graphic, "col-xs-12 col-md-8 col-md-push-4 section graphic")}>
+					<h2>Haves and Wants</h2>
+					<div className={"col-xs-12"}>
+						<Chart
+							height={'80vh'}
+							className={"center-block"}
+							chartType={"ScatterChart"}
+							loader={<div>Loading Chart</div>}
+							data={[headers, ...data]}
+							options={{
+								title: title,
+								curveType: 'function',
+								legend: legend,
+								theme: 'material',
+								tooltip: {isHtml: true, trigger: 'both'},
+								animation: {duration: 1500},
+								pointSize: 5,
+								isStacked: 'relative',
+								chartArea: {'width': '80%', 'height': '75%'},
+								hAxis: hAxis,
+								vAxis: vAxis,
+							}}
+							chartEvents={[{
+								eventName: "ready",
+								callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
+							}]}
+						/>
+					</div>
+					<div className="chart-controls text-center form">
+						{sortControls}
+					</div>
 				</div>
-				<div className={classnames(classes.graphic, "col-xs-12 col-md-8 section")}>
-				<h2>Haves and Wants</h2>
-				<div className={"col-xs-12"}>
-					<Chart
-						height={'80vh'}
-						className={"center-block"}
-						chartType={"ScatterChart"}
-						loader={<div>Loading Chart</div>}
-						data={[headers, ...data]}
-						options={{
-							title: title,
-							curveType: 'function',
-							legend: legend,
-							theme: 'material',
-							tooltip: {isHtml: true, trigger: 'both'},
-							animation: {duration: 1500},
-							pointSize: 5,
-							isStacked: 'relative',
-							chartArea: {'width': '80%', 'height': '75%'},
-							hAxis: hAxis,
-							vAxis: vAxis,
-						}}
-						chartEvents={[{
-							eventName: "ready",
-							callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
-						}]}
-					/>
-				</div>
-				<div className="chart-controls text-center form">
-					{sortControls}
-				</div>
-			</div>
+				{scrollama}
 		</div>
 		)
 	}
