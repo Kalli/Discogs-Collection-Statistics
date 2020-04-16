@@ -1,41 +1,13 @@
 import {Chart} from 'react-google-charts';
-import React, { Component} from "react"
-import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink, correlationCopy} from "./lib.js"
-import {pearsonCorrelation, createSteps} from "./lib.js"
-import { Scrollama } from 'react-scrollama';
+import React from "react"
+import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink} from "./lib.js"
+import {correlationCopy, pearsonCorrelation} from "./lib.js"
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
+import {GraphicComponent, styles} from './graphic.js'
 
 
-const styles = {
-	graphic: {
-		position: 'sticky',
-		top: '0',
-		alignSelf: 'flex-start'
-	},
-	scroller: {
-		flexBasis: '10%',
-	},
-	step: {
-		'border-radius': '15px',
-		margin: '0 auto 2rem auto',
-		paddingTop: 100,
-		paddingBottom: 100,
-		height: '100vh',
-		'& p': {
-			textAlign: 'left',
-			padding: '1rem',
-		},
-		'&:first-child': {
-			marginTop: 200,
-		},
-		'&:last-child': {
-			marginBottom: 500,
-		},
-	},
-}
-
-class HavesAndWants extends Component {
+class HavesAndWants extends GraphicComponent {
 	constructor(props) {
 		super(props);
 		this.state = {sort: "have", type: "community"}
@@ -53,17 +25,8 @@ class HavesAndWants extends Component {
 		`)
 	}
 
-	onStepEnter = ({element, data, direction}) => {
-		element.style.backgroundColor = 'lightgoldenrodyellow';
-		this.setState(data);
-	}
-
-	onStepExit = ({element, data, direction}) => {
-		element.style.backgroundColor = '#fff';
-	}
-
-	createScrollama(classes, masters, correlation, averageWantToHave){
-		const steps = createSteps(classes, [
+	getSteps(correlation, averageWantToHave, masters){
+		return [
 			{
 				data: {'sort': 'have', 'type': 'community'},
 				paragraphs: <>
@@ -138,15 +101,7 @@ class HavesAndWants extends Component {
 					</p>
 				</>
 			}
-		])
-
-		return (
-			<div className={classnames(classes.scroller, "col-xs-12 col-md-4 col-md-pull-8 scroller")}>
-				<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.33}>
-					{steps}
-				</Scrollama>
-			</div>
-		)
+		]
 	}
 
 	render(){
@@ -202,7 +157,7 @@ class HavesAndWants extends Component {
 		const correlation = pearsonCorrelation(data.map(x => x[indices[0]]), data.map(x => x[indices[1]])).toFixed(2)
 		const averageWantToHave = parseFloat(masters.reduce((acc, e) => acc + e.community.want/e.community.have, 0) / masters.length, 2).toFixed(2)
 
-		const scrollama = this.createScrollama(classes, masters, correlation, averageWantToHave)
+		const scrollama = this.createScrollama(this.getSteps(correlation, averageWantToHave, masters))
 
 		if (this.state.type === "versions"){
 			hAxis.viewWindow = {min: data[data.length - 1][0]}
