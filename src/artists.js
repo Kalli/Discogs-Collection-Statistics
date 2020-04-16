@@ -1,39 +1,12 @@
 import {Chart} from 'react-google-charts';
-import React, { Component} from "react"
+import React from "react"
 import {renderReleaseCard, closeTooltipsOnClicks, groupByArtist, formatNumber, pearsonCorrelation, correlationCopy} from "./lib.js"
-import { Scrollama, Step } from 'react-scrollama';
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
+import {GraphicComponent, styles} from './graphic.js'
 
 
-const styles = {
-	graphic: {
-		position: 'sticky',
-		top: '0',
-		alignSelf: 'flex-start'
-	},
-	scroller: {
-		flexBasis: '10%',
-	},
-	step: {
-		margin: '0 auto 2rem auto',
-		paddingTop: 100,
-		paddingBottom: 100,
-		height: '100vh',
-		'& p': {
-			textAlign: 'left',
-			padding: '1rem',
-		},
-		'&:first-child': {
-			marginTop: 200,
-		},
-		'&:last-child': {
-			marginBottom: 500,
-		},
-	},
-}
-
-class Artists extends Component {
+class Artists extends GraphicComponent {
 	constructor(props) {
 		super(props);
 		this.state = {sort: "have", size: 0, intervalId: null, changeSize: false}
@@ -86,6 +59,71 @@ class Artists extends Component {
 		clearInterval(this.state.intervalId)
 	}
 
+	getSteps(artists, averageWantToHave, correlation){
+		const a = artists
+		return [
+			{
+				data: {'sort': 'have', 'changeSize': false},
+				paragraphs: <>
+					<p>
+						Let's move on to the artists. Here we've grouped all the master releases by the artist or band
+						behind them. This adds up the wants and haves for all the releases a certain artist has in the
+						top 250. Some artists appear in the top 250 many times, while other are closer to one hit
+						wonders.
+					</p>
+					<p>
+						<span dangerouslySetInnerHTML={{__html: artists[0].artistLink}} /> top the list,
+						they have {artists[0].masters.length} releases in the top 250 which have found their way
+						to {formatNumber(artists[0].have)} collections and {formatNumber(artists[0].want)} wantlists.
+					</p>
+					<p>
+						<span dangerouslySetInnerHTML={{__html: artists[1].artistLink}} /> take the silver,
+						their {artists[1].masters.length} releases rack up {formatNumber(artists[1].have)} haves
+						and {formatNumber( artists[1].want)} wants.
+					</p>
+					<p>
+						In third place we
+						find <span dangerouslySetInnerHTML={{__html: artists[2].artistLink}} /> whose
+						{" " + artists[2].masters.length} releases are in the collections
+						of {formatNumber(artists[2].have)} users and have been wantlisted
+						by {formatNumber( artists[2].want)} people.
+					</p>
+				</>
+			},
+			{
+				data: {'sort': 'have', 'changeSize': false},
+				paragraphs: <>
+					<p>
+						Now lets graph wants vs. haves to show us which artists are in more wantlists than
+						collections (<span style={{"color": "#db4437"}}>red</span>) and
+						vice versa (<span style={{"color": "#5e97f6"}}>blue</span>).
+					</p>
+					<p>
+						The mean want to have ratio is {averageWantToHave}. That means that on average the
+						releases from these artists can be found in more
+						{averageWantToHave > 1? " wantlists than collections" : " collections than wantlists" }.
+						The correlation between wants and haves is {correlation},
+						a {correlationCopy(correlation)} correlation, looking at the graph confirms this.
+					</p>
+				</>
+			},
+			{
+				data: {'sort': 'haves-wants', 'changeSize': true},
+				paragraphs: <>
+						<p>
+							For further clarity let's adjust the size of each point to reflect how many releases
+							that artist has in the top 250. This shows us that the artists taking the top spots are
+							also those that have the most releases.
+						</p>
+						<p>
+							This makes sense, it would take a serious one hit wonder for its wants and haves to
+							outweigh the cumulative wants and have of artists with many releases in the top list.
+						</p>
+				</>
+			}
+		]
+
+	}
 
 	createArtistTooltip(artist, index){
 		let width;
@@ -185,6 +223,7 @@ class Artists extends Component {
 
 		const indices = this.state.sort === "haves-wants" ? ['have', 'want'] : [1, 3]
 		const correlation = pearsonCorrelation(artists.map(x => x[indices[0]]), artists.map(x => x[indices[1]])).toFixed(2)
+		const scrollama = this.createScrollama(this.getSteps(artists, averageWantToHave, correlation))
 
 		const title = `Most Collected ${this.props.genre} Master Releases - By Artist `
 
@@ -259,61 +298,7 @@ class Artists extends Component {
 					{sortControls}
 				</div>
 			</div>
-				<div className={classnames(classes.scroller, "col-xs-12 col-md-4")}>
-					<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.33}>
-					<Step data={{'sort': 'have', 'changeSize': false}} >
-						<div className={classes.step}>
-							<p>
-								Let's move on to the artists. Here we've grouped all the master releases by the artist or band behind them.
-								This adds up the wants and haves for all the releases a certain artist has in the top 250.
-								Some artists appear in the top 250 many times, while other are closer to one hit wonders.
-							</p>
-							<p>
-								<span dangerouslySetInnerHTML={{__html: artists[0].artistLink}} /> top the list,
-								they have {artists[0].masters.length} releases in the top 250 which have found their way
-								to {formatNumber(artists[0].have)} collections and {formatNumber(artists[0].want)} wantlists.
-							</p>
-							<p>
-								<span dangerouslySetInnerHTML={{__html: artists[1].artistLink}} /> take the silver,
-								their {artists[1].masters.length} releases rack up {formatNumber(artists[1].have)} haves and {formatNumber( artists[1].want)} wants.
-							</p>
-							<p>
-								In third place we find <span dangerouslySetInnerHTML={{__html: artists[2].artistLink}} /> whose {artists[2].masters.length} releases
-								are in the collections of {formatNumber(artists[2].have)} users and have been wantlisted by {formatNumber( artists[2].want)} people.
-							</p>
-						</div>
-					</Step>
-					<Step data={{'sort': 'haves-wants', 'changeSize': false}} >
-						<div className={classes.step}>
-							<p>
-								Now lets graph wants vs. haves to show us which artists are in more wantlists than
-								collections (<span style={{"color": "#db4437"}}>red</span>) and
-								vice versa (<span style={{"color": "#5e97f6"}}>blue</span>).
-							</p>
-							<p>
-								The mean want to have ratio is {averageWantToHave}. That means that on average the
-								releases from these artists can be found in more
-								{averageWantToHave > 1? " wantlists than collections" : " collections than wantlists" }.
-								The correlation between wants and haves is {correlation},
-								a {correlationCopy(correlation)} correlation, looking at the graph confirms this.
-							</p>
-						</div>
-					</Step>
-					<Step data={{'sort': 'haves-wants', 'changeSize': true}} >
-						<div className={classes.step}>
-							<p>
-								For further clarity let's adjust the size of each point to reflect how many releases
-								that artist has in the top 250. This shows us that the artists taking the top spots are
-								also those that have the most releases.
-							</p>
-							<p>
-								This makes sense, it would take a serious one hit wonder for its wants and haves to
-								outweigh the cumulative wants and have of artists with many releases in the top list.
-							</p>
-						</div>
-					</Step>
-					</Scrollama>
-				</div>
+			{scrollama}
 		</div>
 		)
 	}
