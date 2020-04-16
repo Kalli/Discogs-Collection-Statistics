@@ -1,6 +1,6 @@
 import {Chart} from 'react-google-charts';
 import React, { Component} from "react"
-import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink} from "./lib.js"
+import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink, pearsonCorrelation} from "./lib.js"
 import { Scrollama, Step } from 'react-scrollama';
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
@@ -36,7 +36,7 @@ const styles = {
 class HavesAndWants extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {sort: "have"}
+		this.state = {sort: "have", type: "community"}
 	}
 
 	sort = (e) => {
@@ -60,56 +60,76 @@ class HavesAndWants extends Component {
 		element.style.backgroundColor = '#fff';
 	}
 
+	correlationCopy(correlation){
+		if (correlation > 0.9){
+			return 'very strong'
+		}
+		if (correlation > 0.8){
+			return 'quite strong'
+		}
+		if (correlation > 0.7){
+			return 'strong'
+		}
+		if (correlation > 0.5){
+			return 'moderate'
+		}
+		return 'weak'
+	}
+
 	render(){
 		const { classes } = this.props;
 		let headers
 		let vAxis
 		let hAxis
 
-		if (this.state.sort === "haves-wants"){
+		let title = `Most Collected ${this.props.genre} Master Releases`
+
+		if (this.state.type === "versions"){
 			headers = [
 				{id: 'haves', label: 'Haves', type: 'number'},
 				{id: 'wants', label: 'Wants', type: 'number'},
 				{type: 'string', role: 'tooltip', 'p': {'html': true}},
 				{type: 'string', role: 'style'}
 			]
-			hAxis = {title: 'Haves'}
-			vAxis = {title: 'Wants'}
+			title +=  ` - By Number of Versions and ${this.state.sort.toTitleCase()}s`
+			hAxis = {title: 'Versions'}
+			vAxis = {title: this.state.sort.toTitleCase() + 's'}
 		}else{
 			headers = [
 				{id: 'position', label: 'position', type: 'number'},
-				{id: 'haves', label: 'Haves', type: 'number'},
+				{id: 'haves', label: this.state.sort + 's', type: 'number'},
 				{type: 'string', role: 'tooltip', 'p': {'html': true}},
 				{id: 'wants', label: 'Wants', type: 'number'},
 				{type: 'string', role: 'tooltip', 'p': {'html': true}}
 			]
-			hAxis = { title: 'Position'}
+			title +=  ' - By Haves and Wants'
+			hAxis = {title: 'Position'}
 			vAxis = {title: 'Count', format: 0, viewWindow: {min: 0}}
 		}
 
-		let data
-		let title
 		const masters = this.props.data.masters.sort((a, b) => {
 			return b.community[this.state.sort] - a.community[this.state.sort]
 		})
+
 		const averageWantToHave = parseFloat(masters.reduce((acc, e) => acc + e.community.want/e.community.have, 0) / masters.length, 2).toFixed(2)
 
 
-		data = masters.reduce((data, master, index) => {
+		const data = masters.reduce((data, master, index) => {
 			const tooltip = this.createMasterTooltip(master, index)
-			if (this.state.sort === "haves-wants"){
+			if (this.state.type === "versions"){
 				const color =  master.community.want >  master.community.have ? '#db4437' : '#5e97f6'
 				const style = `point {fill-color: ${color}}`
-				data.push([master.community.have, master.community.want, tooltip, style])
+				data.push([master.versions, master.community[this.state.sort], tooltip, style])
 			}else{
 				data.push([index + 1, master.community.have, tooltip, master.community.want, tooltip])
 			}
 			return data
 		}, [])
 
-		title = `Most Collected ${this.props.genre} Master Releases - By Haves and Wants `
+		const indices = this.state.type === "versions" ? [0, 1] : [1, 3]
+		const correlation = pearsonCorrelation(data.map(x => x[indices[0]]), data.map(x => x[indices[1]])).toFixed(2)
 
-		if (this.state.sort === "haves-wants"){
+		if (this.state.type === "versions"){
 			hAxis.viewWindow = {min: data[data.length - 1][0]}
 			vAxis.viewWindow = {min: data[data.length - 1][1]}
 		}else{
@@ -138,22 +158,13 @@ class HavesAndWants extends Component {
 					/>
 					Wants
 				</label>
-				<label className="radio-inline" >
-					<input type="radio"
-						   name="sort"
-						   value="haves-wants"
-						   checked={this.state.sort === "haves-wants"}
-						   onChange={this.sort}
-					/>
-					Haves vs. Wants
-				</label>
 			</div>
-		const legend = this.state.sort === "haves-wants" ? 'none' : { position: 'bottom' }
+		const legend = this.state.type === "versions" ? 'none' : { position: 'bottom' }
 		return (
 			<div id="haves-and-wants" className={"col-xs-12 col-md-12"}>
 				<div className={classnames(classes.scroller, "col-xs-12 col-md-4")}>
 					<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.33}>
-					<Step data={{'sort': 'have'}}>
+					<Step data={{'sort': 'have', 'type': 'community'}}>
 						<div className={classes.step}>
 							<p>
 								The first chart shows the top 250 most collected releases ordered by the number of collections they appear in.
@@ -176,7 +187,7 @@ class HavesAndWants extends Component {
 							</p>
 						</div>
 					</Step>
-					<Step data={{'sort': 'want'}} >
+					<Step data={{'sort': 'want', 'type': 'community'}} >
 						<div className={classes.step}>
 							<p>
 								Let's change the sorting to <i>wants</i> (the number of times a master release appears in users want lists).
@@ -189,19 +200,36 @@ class HavesAndWants extends Component {
 								got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[1])}} /> by <span dangerouslySetInnerHTML={{__html: createArtistLink(masters[1].artists)}} />
 								 and the bronze is taken by <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[2])}} />.
 							</p>
+							<p>
+								The average want to have ratio is {averageWantToHave} and the correlation between wants
+								and haves is {correlation}, a {this.correlationCopy(correlation)} correlation. This is
+								apparent from the graph as well.
+							</p>
 						</div>
 					</Step>
-					<Step data={{'sort': 'haves-wants'}}>
+					<Step data={{'sort': 'have', 'type': 'versions'}}>
 						<div className={classes.step}>
 							<p>
-								To get a better look let's change the axes. Instead of ordering by wants and haves, lets plot wants against haves.
-								Now releases that are in more wantlists than in collections are <span style={{"color": "#db4437"}}>red</span> while
-								releases that are in more collections than in wantlists are <span style={{"color": "#5e97f6"}}>blue</span>.
-								This also helps to illustrate any outliers.
+								Now we've plotted the collection numbers against the number of versions for each release.
+								Each version of a master release is a specific physical release and some of the releases
+								have hundreds of versions.
 							</p>
 							<p>
-								The mean want to have ratio is {averageWantToHave}, so on average for every 100 collections
-								a release can be found in it has been added to {100 * averageWantToHave} wantlists.
+								For instance there are over 900 versions of Pink
+								Floyds <a target="_blank" href="https://www.discogs.com/master/10362"><em>The Dark Side of the Moon</em></a> catalogued on Discogs.
+								These include pressings from different countries, different formats (vinyl, cd, cassette and more esoteric ones)
+								and then there are limited editions, represses, anniversary reissues and so on and so forth.
+							</p>
+							<p>
+								Here releases that are in more wantlists than in collections are <span style={{"color": "#db4437"}}>red</span> while
+								releases that are in more collections than in wantlists are <span style={{"color": "#5e97f6"}}>blue</span>.
+							</p>
+							<p>
+								The correlation between the number of versions and collection additions is {correlation},
+								a {this.correlationCopy(correlation)} correlation. At first you might assume that more versions
+								would always mean more collection placements and wantlist additions, but that does not hold for
+								all genres. Some releases have been reissued many times but in small runs, while others
+								had big initial releases but not a lot of subsequent interest.
 							</p>
 						</div>
 					</Step>
@@ -211,7 +239,7 @@ class HavesAndWants extends Component {
 				<h2>Haves and Wants</h2>
 				<div className={"col-xs-12"}>
 					<Chart
-						height={880}
+						height={'80vh'}
 						className={"center-block"}
 						chartType={"ScatterChart"}
 						loader={<div>Loading Chart</div>}
