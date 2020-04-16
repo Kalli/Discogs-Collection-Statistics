@@ -1,6 +1,6 @@
 import {Chart} from 'react-google-charts';
 import React, { Component} from "react"
-import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink, pearsonCorrelation} from "./lib.js"
+import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink, correlationCopy, pearsonCorrelation} from "./lib.js"
 import { Scrollama, Step } from 'react-scrollama';
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
@@ -58,22 +58,6 @@ class HavesAndWants extends Component {
 
 	onStepExit = ({element, data, direction}) => {
 		element.style.backgroundColor = '#fff';
-	}
-
-	correlationCopy(correlation){
-		if (correlation > 0.9){
-			return 'very strong'
-		}
-		if (correlation > 0.8){
-			return 'quite strong'
-		}
-		if (correlation > 0.7){
-			return 'strong'
-		}
-		if (correlation > 0.5){
-			return 'moderate'
-		}
-		return 'weak'
 	}
 
 	render(){
@@ -202,7 +186,7 @@ class HavesAndWants extends Component {
 							</p>
 							<p>
 								The average want to have ratio is {averageWantToHave} and the correlation between wants
-								and haves is {correlation}, a {this.correlationCopy(correlation)} correlation. This is
+								and haves is {correlation}, a {correlationCopy(correlation)} correlation. This is
 								apparent from the graph as well.
 							</p>
 						</div>
@@ -226,7 +210,7 @@ class HavesAndWants extends Component {
 							</p>
 							<p>
 								The correlation between the number of versions and collection additions is {correlation},
-								a {this.correlationCopy(correlation)} correlation. At first you might assume that more versions
+								a {correlationCopy(correlation)} correlation. At first you might assume that more versions
 								would always mean more collection placements and wantlist additions, but that does not hold for
 								all genres. Some releases have been reissued many times but in small runs, while others
 								had big initial releases but not a lot of subsequent interest.

@@ -1,6 +1,6 @@
 import {Chart} from 'react-google-charts';
 import React, { Component} from "react"
-import {renderReleaseCard, closeTooltipsOnClicks, groupByArtist, formatNumber} from "./lib.js"
+import {renderReleaseCard, closeTooltipsOnClicks, groupByArtist, formatNumber, pearsonCorrelation, correlationCopy} from "./lib.js"
 import { Scrollama, Step } from 'react-scrollama';
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
@@ -182,12 +182,13 @@ class Artists extends Component {
 			}
 			return data
 		}, [])
+
+		const indices = this.state.sort === "haves-wants" ? ['have', 'want'] : [1, 3]
+		const correlation = pearsonCorrelation(artists.map(x => x[indices[0]]), artists.map(x => x[indices[1]])).toFixed(2)
+
 		const title = `Most Collected ${this.props.genre} Master Releases - By Artist `
 
-		if (this.state.sort === "haves-wants"){
-			hAxis.viewWindow = {min: data[data.length - 1][0]}
-			vAxis.viewWindow = {min: data[data.length - 1][1]}
-		}else{
+		if (this.state.sort !== "haves-wants"){
 			hAxis.viewWindow = {max: data.length}
 		}
 
@@ -285,7 +286,7 @@ class Artists extends Component {
 					<Step data={{'sort': 'haves-wants', 'changeSize': false}} >
 						<div className={classes.step}>
 							<p>
-								Again lets graph wants vs. haves to show us which artists are in more wantlists than
+								Now lets graph wants vs. haves to show us which artists are in more wantlists than
 								collections (<span style={{"color": "#db4437"}}>red</span>) and
 								vice versa (<span style={{"color": "#5e97f6"}}>blue</span>).
 							</p>
@@ -293,6 +294,8 @@ class Artists extends Component {
 								The mean want to have ratio is {averageWantToHave}. That means that on average the
 								releases from these artists can be found in more
 								{averageWantToHave > 1? " wantlists than collections" : " collections than wantlists" }.
+								The correlation between wants and haves is {correlation},
+								a {correlationCopy(correlation)} correlation, looking at the graph confirms this.
 							</p>
 						</div>
 					</Step>

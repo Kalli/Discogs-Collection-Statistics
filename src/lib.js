@@ -94,3 +94,19 @@ export function pearsonCorrelation(x, y) {
 		return acc  + (((x[index] - mean_x) /  stdev_x) * ((y[index] - mean_y) /  stdev_y))
 	}, 0) / x.length)
 }
+
+export function correlationCopy(correlation){
+	if (correlation > 0.9){
+		return 'very strong'
+	}
+	if (correlation > 0.8){
+		return 'quite strong'
+	}
+	if (correlation > 0.7){
+		return 'strong'
+	}
+	if (correlation > 0.5){
+		return 'moderate'
+	}
+	return 'weak'
+}
