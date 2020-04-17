@@ -1,39 +1,12 @@
 import {createArtistLink, createMasterLink, closeTooltipsOnClicks} from "./lib.js"
 import {Chart} from 'react-google-charts';
-import React, { Component} from "react"
-import { Scrollama, Step } from 'react-scrollama';
+import React from "react"
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
+import {GraphicComponent, styles} from './graphic.js'
 
 
-const styles = {
-	graphic: {
-		position: 'sticky',
-		top: '0',
-		alignSelf: 'flex-start'
-	},
-	scroller: {
-		flexBasis: '10%',
-	},
-	step: {
-		margin: '0 auto 2rem auto',
-		paddingTop: 100,
-		paddingBottom: 100,
-		height: '100vh',
-		'& p': {
-			textAlign: 'left',
-			padding: '1rem',
-		},
-		'&:first-child': {
-			marginTop: 200,
-		},
-		'&:last-child': {
-			marginBottom: 500,
-		},
-	},
-}
-
-export class Decades extends Component{
+export class Decades extends GraphicComponent{
 
 	constructor(props) {
 		super(props)
@@ -58,15 +31,54 @@ export class Decades extends Component{
 		this.setState({type: e.currentTarget.value})
 	}
 
-	onStepEnter = ({element, data, direction}) => {
-		element.style.backgroundColor = 'lightgoldenrodyellow';
-		this.setState(data);
+	getSteps(sortedData){
+		return [
+			{
+				data: {'type': 'Decade'},
+				paragraphs: <>
+					<p>
+						In this chart we turn to the history of the most collected releases.
+						To begin with, the releases are grouped by the decade they were released in.
+					</p>
+					<p>
+						The {sortedData[0][0]}s are the biggest decade with {sortedData[0][1]} releases coming
+						out in that ten year span. After that the {sortedData[1][0]}s
+						{sortedData[2] && <> and {sortedData[2][0]}s </>}
+						clock in with {sortedData[1][1]}
+						{sortedData[2] && <> and {sortedData[2][1]} </>}
+						releases respectively.
+					</p>
+					{this.props.genre === "" &&
+					<p>
+						It makes sense that records released a long time ago would have more represses and versions and
+						thus the possibilities to get into more collections. As the decades pass the more likely it
+						also seems for an album to become part of the canon. After the turn of the century you'd expect
+						file sharing, digital collecting and streaming to take up more of peoples music consumption as well.
+						But it still begs the question: why are the 70s so much bigger than the 60s and 50s?
+					</p>
+					}
+					<p>
+						You can click each column to see the releases released in those years.
+					</p>
+				</>
+			},
+			{
+				data: {'type': 'Year'},
+				paragraphs: <>
+					<p>
+						This is what things look like if we break the releases down by the year they came out.
+					</p>
+					{this.state.type === "Year" &&
+					<p>
+						The {sortedData[0][1]} releases that came out in {sortedData[0][0]} make it the biggest year.
+						Number two is {sortedData[1][0]} when {sortedData[1][1]} releases came out and third prize
+						goes to {sortedData[2][0]} with {sortedData[2][1]} releases.
+					</p>
+					}
+				</>
+			}
+		]
 	}
-
-	onStepExit = ({element, data, direction}) => {
-		element.style.backgroundColor = '#fff';
-	}
-
 	render(){
 		const { classes } = this.props;
         const data = this.groupBy(this.props.data.masters)
@@ -77,6 +89,7 @@ export class Decades extends Component{
 			{type: 'string', role: 'tooltip', 'p': {'html': true}}
 		]
 
+		const scrollama = this.createScrollama(this.getSteps(sortedData))
 		// const earliest = String(Math.min(...years))
 		// const latest = String(Math.max(...years))
 
@@ -138,53 +151,7 @@ export class Decades extends Component{
 					</div>
 				</div>
 			</div>
-			<div className="col-xs-12 col-md-4 text-left">
-				<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.33}>
-					<Step data={{'type': 'Decade'}}>
-						<div className={classes.step}>
-							<p>
-								In this chart we turn to the history of the most collected releases.
-								To begin with, the releases are grouped by the decade they were released in.
-							</p>
-							<p>
-								The {sortedData[0][0]}s are the biggest decade with {sortedData[0][1]} releases coming
-								out in that ten year span. After that the {sortedData[1][0]}s
-								{sortedData[2] && <> and {sortedData[2][0]}s </>}
-								clock in with {sortedData[1][1]}
-								{sortedData[2] && <> and {sortedData[2][1]} </>}
-								releases respectively.
-							</p>
-							{this.props.genre === "" &&
-							<p>
-								It makes sense that records released a long time ago would have more represses and
-								versions and thus the possibilities to get into more collections.
-								As the decades pass the more likely it also seems for an album to become part of the canon.
-								After the turn of the century you'd expect file sharing, digital collecting and streaming
-								to take up more of peoples music consumption as well. But why are the 70s so much bigger
-								than the 60s and 50s?
-							</p>
-							}
-							<p>
-								You can click each column to see the releases released in those years.
-							</p>
-						</div>
-					</Step>
-					<Step data={{'type': 'Year'}}>
-						<div className={classes.step}>
-							<p>
-								This is what things look like if we break the releases down by the year they came out.
-							</p>
-							{this.state.type === "Year" &&
-								<p>
-									The {sortedData[0][1]} releases that came out in {sortedData[0][0]} make it the biggest year.
-									Number two is {sortedData[1][0]} when {sortedData[1][1]} releases came out and third prize
-									goes to {sortedData[2][0]} with {sortedData[2][1]} releases.
-								</p>
-							}
-						</div>
-					</Step>
-				</Scrollama>
-			</div>
+			{scrollama}
 		</div>
 		)
 	}
