@@ -113,7 +113,7 @@ class App extends Component{
 		const header = this.navbar(genres)
 		const havesAndWants = !this.state.loading && <StyledHavesAndWants data={this.state.data} genre={genreName}  offset={true} />
 		const artists = !this.state.loading && <StyledArtists data={this.state.data} genre={genreName} />
-		const genresAndStyles = !this.state.loading && <StyledGenresAndStyles data={this.state.data} genre={genreName} />
+		const genresAndStyles = !this.state.loading && <StyledGenresAndStyles data={this.state.data} genre={genreName} offset={true}/>
 		const decades = !this.state.loading && <StyledDecades data={this.state.data} genre={genreName}/>
 		const artistsByCountry = !this.state.loading && <StyledArtistsByCountry data={this.state.data} genre={genreName}/>
 		const artistsByGender = !this.state.loading && <StyledArtistsByGender data={this.state.data} genre={genreName}/>
