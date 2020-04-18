@@ -90,12 +90,10 @@ export class Decades extends GraphicComponent{
 		]
 
 		const scrollama = this.createScrollama(this.getSteps(sortedData))
-		// const earliest = String(Math.min(...years))
-		// const latest = String(Math.max(...years))
 
 		return (
 			<div id="years-and-decades" className="col-xs-12">
-				<div className={classnames(classes.graphic, "col-xs-12 col-md-8 section")}>
+				<div className={classnames(classes.graphic, this.graphicClassNames())}>
 				<h2>Years and Decades</h2>
 					<div className={"col-xs-12"}>
 					<Chart

@@ -80,8 +80,7 @@ export class TimeLine extends GraphicComponent{
 					</p>
 					<p>
 						As mentioned before <em>{mostReleases[0][0]}</em> have {mostReleases[0][1]} releases in the top
-						250, the most of any artist.
-						{mostReleases[0][0] === longestSpan[0][0] &&
+						250, the most of any artist. {mostReleases[0][0] === longestSpan[0][0] &&
 							<> Their releases also have span the longest time, </>
 						}
 						{mostReleases[0][0] !== longestSpan[0][0] &&
@@ -131,11 +130,9 @@ export class TimeLine extends GraphicComponent{
         ]
 		const scrollama = this.createScrollama(this.getSteps(mostReleases, longestSpan))
 
-
-
 		return (
 			<div id="years-and-decades" className="col-xs-12">
-				<div className={classnames(classes.graphic, "col-xs-12 col-md-8 section")}>
+				<div className={classnames(classes.graphic, this.graphicClassNames())}>
 					<h2>Timeline</h2>
 					<div className={"col-xs-12"}>
 						<Chart

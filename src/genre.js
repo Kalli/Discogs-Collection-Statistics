@@ -15,8 +15,7 @@ export class GenresAndStyles extends GraphicComponent{
 	constructor(props) {
 		super(props)
 		const charts = this.resizeCharts(1)
-		const offset = this.props.offset? this.props.offset : false
-		this.state = {...charts, ...{selectedGenre: props.genre? props.genre : 'Rock', offset: offset}}
+		this.state = {...charts, ...{selectedGenre: props.genre? props.genre : 'Rock'}}
 	}
 
 	componentDidMount() {

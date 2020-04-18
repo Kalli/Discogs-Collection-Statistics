@@ -11,8 +11,7 @@ class HavesAndWants extends GraphicComponent {
 
 	constructor(props) {
 		super(props)
-		const offset = this.props.offset? this.props.offset : false
-		this.state = {sort: "have", type: "community", offset: offset}
+		this.state = {sort: "have", type: "community"}
 	}
 
 	sort = (e) => {

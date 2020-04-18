@@ -73,6 +73,7 @@ class App extends Component{
 				"Artists",
 				"Genres and Styles",
 				"Years and Decades",
+				"Timeline",
 				"Artists by Country",
 				"Artists by Gender",
 				"Outro",
@@ -117,9 +118,9 @@ class App extends Component{
 		const artists = !this.state.loading && <StyledArtists data={this.state.data} genre={genreName} />
 		const genresAndStyles = !this.state.loading && <StyledGenresAndStyles data={this.state.data} genre={genreName} offset={true}/>
 		const decades = !this.state.loading && <StyledDecades data={this.state.data} genre={genreName}/>
+		const timeline = !this.state.loading && <StyledTimeLine data={this.state.data} genre={genreName} offset={true}/>
 		const artistsByCountry = !this.state.loading && <StyledArtistsByCountry data={this.state.data} genre={genreName}/>
-		const artistsByGender = !this.state.loading && <StyledArtistsByGender data={this.state.data} genre={genreName}/>
-		const timeline = !this.state.loading && <StyledTimeLine data={this.state.data} genre={genreName}/>
+		const artistsByGender = !this.state.loading && <StyledArtistsByGender data={this.state.data} genre={genreName} offset={true}/>
 
 		return (
 			<div className="wrapper">

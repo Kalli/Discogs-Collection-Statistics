@@ -10,8 +10,7 @@ class Artists extends GraphicComponent {
 
 	constructor(props) {
 		super(props);
-		const offset = this.props.offset? this.props.offset : false
-		this.state = {sort: "have", size: 0, intervalId: null, changeSize: false, offset}
+		this.state = {sort: "have", size: 0, intervalId: null, changeSize: false}
 	}
 
 	sort = (e) => {
