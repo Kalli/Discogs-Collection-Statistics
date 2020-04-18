@@ -1,6 +1,6 @@
 import {Chart} from 'react-google-charts';
 import React from "react"
-import {renderReleaseCard, closeTooltipsOnClicks, groupByArtist, formatNumber, pearsonCorrelation, correlationCopy} from "./lib.js"
+import {closeTooltipsOnClicks, groupByArtist, formatNumber, pearsonCorrelation, correlationCopy} from "./lib.js"
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
 import {GraphicComponent, styles} from './graphic.js'
@@ -127,47 +127,7 @@ class Artists extends GraphicComponent {
 
 	}
 
-	createArtistTooltip(artist, index){
-		let width;
-		switch (artist.masters.length) {
-			case 1:{
-				width = 12
-				break
-			}
-			case 2:{
-				width = 6
-				break
-			}
-			default:{
-				width = 4
-				break
-			}
-		}
 
-		return (`
-			<div class="chart-tooltip artist-tooltip text-center">
-				<div class="artist row">
-					${this.state.sort !== "haves-wants" ? index + 1 + ". ": ''} ${artist.artistLink}
-					<div>
-						<span class="label label-default">
-							Releases: ${artist.masters.length}
-						</span>
-						<span class="label label-primary">
-							Have: ${formatNumber(artist.masters.reduce((acc, e) => acc + e.community.have, 0))}
-						</span>
-						<span class="label label-danger">
-							Want: ${formatNumber(artist.masters.reduce((acc, e) => acc + e.community.want, 0))}
-						</span>
-					</div>
-				</div>
-				<div class="releases row display-flex center-block">
-					${artist.masters.reduce(function (acc, e) {
-						return acc + '<div class="col-xs-' + width + ' clearfix">' + renderReleaseCard(e) + "</div>";
-					}, "")}
-				</div>
-			</div>
-		`)
-	}
 
 	render(){
 		const { classes } = this.props;
