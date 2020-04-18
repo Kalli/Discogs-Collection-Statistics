@@ -8,6 +8,7 @@ import {StyledHavesAndWants} from './haves.js'
 import {StyledArtists} from './artists.js'
 import {StyledArtistsByCountry} from './countries.js'
 import {StyledArtistsByGender} from './gender.js'
+import {StyledTimeLine} from "./timeline"
 
 class App extends Component{
 
@@ -117,6 +118,7 @@ class App extends Component{
 		const decades = !this.state.loading && <StyledDecades data={this.state.data} genre={genreName}/>
 		const artistsByCountry = !this.state.loading && <StyledArtistsByCountry data={this.state.data} genre={genreName}/>
 		const artistsByGender = !this.state.loading && <StyledArtistsByGender data={this.state.data} genre={genreName}/>
+		const timeline = !this.state.loading && <StyledTimeLine data={this.state.data} genre={genreName}/>
 
 		return (
 			<div className="wrapper">
@@ -160,17 +162,19 @@ class App extends Component{
 					</div>
 
 					{havesAndWants}
-					<div className={"col-xs-12 interlude"}>&nbsp;</div>
+					<div className={"col-xs-12 interlude"} />
 					{artists}
-					<div className={"col-xs-12 interlude"}>&nbsp;</div>
+					<div className={"col-xs-12 interlude"} />
 					{genresAndStyles}
-					<div className={"col-xs-12 interlude"}>&nbsp;</div>
+					<div className={"col-xs-12 interlude"} />
 					{decades}
-					<div className={"col-xs-12 interlude"}>&nbsp;</div>
+					<div className={"col-xs-12 interlude"} />
+					{timeline}
+					<div className={"col-xs-12 interlude"} />
 					{artistsByCountry}
-					<div className={"col-xs-12 interlude"}>&nbsp;</div>
+					<div className={"col-xs-12 interlude"} />
 					{artistsByGender}
-					<div className={"col-xs-12 interlude"}>&nbsp;</div>
+					<div className={"col-xs-12 interlude"} />
 
 					<div id="outro" className="col-xs-12">
                         <h2>Outro</h2>

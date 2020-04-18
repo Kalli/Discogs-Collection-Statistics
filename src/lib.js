@@ -15,9 +15,11 @@ export function createArtistLink(artists){
 	}, "")
 }
 
-export function groupByArtist(masters){
+export function groupByArtist(masters, createLink=true){
 	return masters.reduce((artists, master) => {
-		let artistName = createArtistLink(master.artists)
+		const artistName = createLink? createArtistLink(master.artists) : master.artists.reduce((acc, e) => {
+			return (acc + " " + e.name + " " + e.join).trim()
+		}, "")
 		artists[artistName] ? artists[artistName].push(master) : artists[artistName] = [master]
 		return artists
 	}, {})
