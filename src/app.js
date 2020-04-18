@@ -106,6 +106,7 @@ class App extends Component{
             ["Drum & Bass", "most-collected-electronic-drum-n-bass-masters.json"],
             ["Dubstep", "most-collected-electronic-dubstep-masters.json"],
             ["House", "most-collected-electronic-house-masters.json"],
+            ["Jungle", "most-collected-electronic-jungle-masters.json"],
             ["Techno", "most-collected-electronic-techno-masters.json"],
         ]
 		const selectedGenre = genres.filter(e => e[1] === this.state.genre)[0]
