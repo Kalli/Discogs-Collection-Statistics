@@ -33,23 +33,26 @@ class HavesAndWants extends GraphicComponent {
 				data: {'sort': 'have', 'type': 'community'},
 				paragraphs: <>
 					<p>
-						The first chart shows the top 250 most collected releases ordered by the number of collections they appear in.
-						Mouse over the chart to get more information on each data point.
-						In first place we've got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[0])}} /> by
+						The first chart shows the top 250 most collected {this.props.genre} releases ordered by the
+						number of collections they appear in. Mouse over the chart to get more information on each data
+						point. In first place we've
+						got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[0])}} /> by
 						<span dangerouslySetInnerHTML={{__html: createArtistLink(masters[0].artists)}} /> which can be
 						found in {formatNumber(masters[0].community.have)} collections.
 					</p>
 					<p>
-						The <span style={{"color": "#5e97f6"}}>blue</span> points mark how many collections a release has been added to while
-						the <span style={{"color": "#db4437"}}>red</span> points
-						show how many wantlists the release can be found in.
-						You can click on each point to see more information about that release.
+						The <span style={{"color": "#5e97f6"}}>blue</span> points mark how many collections a release
+						has been added to while the <span style={{"color": "#db4437"}}>red</span> points show how many
+						wantlists the release can be found in. You can click on each point to see more information about
+						that release.
 					</p>
 					<p>
-						You can see that this chart follows a <a href="https://en.wikipedia.org/wiki/Long_tail" target="_blank">long tail</a> distribution.
-						A few releases at the top can be found in way more collections than the majority of the other releases.
-						After this initial peak the decline is slow but steady.
-						As you'd expect the most collected records in the more obscure genres are dwarfed by the bigger hits of more mainstream fare.
+						You can see that this chart follows
+						a <a href="https://en.wikipedia.org/wiki/Long_tail" target="_blank">long tail</a> distribution.
+						A few releases at the top can be found in way more collections than the majority of the other
+						releases. After this initial peak the decline is slow but steady. As you'd expect the most
+						collected records in the more obscure genres are dwarfed by the bigger hits of more mainstream
+						fare.
 					</p>
 			</>
 			},{
@@ -64,7 +67,7 @@ class HavesAndWants extends GraphicComponent {
 						Here <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[0])}} /> by
 						<span dangerouslySetInnerHTML={{__html: createArtistLink(masters[0].artists)}} /> tops the list
 						with {formatNumber(masters[0].community.want)} wantlist additions. After that we've
-						got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[1])}} />
+						got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[1])}} /> {" "}
 						by <span dangerouslySetInnerHTML={{__html: createArtistLink(masters[1].artists)}} /> and
 						the bronze is taken by <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[2])}} />.
 					</p>
@@ -84,10 +87,10 @@ class HavesAndWants extends GraphicComponent {
 					</p>
 					<p>
 						For instance there are over 900 versions of Pink
-						Floyds <a target="_blank" href="https://www.discogs.com/master/10362"><em>The Dark Side of the Moon</em></a> catalogued
-						on Discogs. These include pressings from different countries, different formats (vinyl, cd,
-						cassette and more esoteric ones) and then there are limited editions, represses, anniversary
-						reissues and so on and so forth.
+						Floyds <a target="_blank" href="https://www.discogs.com/master/10362"><em>The Dark Side of the
+						Moon</em></a> catalogued on Discogs. These include pressings from different countries,
+						different formats (vinyl, cd, cassette and more esoteric ones) and then there are limited
+						editions, represses, anniversary reissues and so on and so forth.
 					</p>
 					<p>
 						Here releases that are in more wantlists than in collections
