@@ -183,7 +183,7 @@ class App extends Component{
                             <p>
 								I hope this summary of the most collected Discogs releases was informative and entertaining to you.
 								Thanks to the Discogs and MusicBrainz user communities for their tireless work on cataloguing the worlds music.
-								The code used to collect and visualize this data can be found on <a href="http://github.com/kalli/collection-stats">Github</a>.
+								The code used to collect and visualize this data can be found on <a href="https://github.com/kalli/Discogs-Collection-Statistics/">Github</a>.
 								If you see any bugs or inconsistencies in the data you can let me know
 								on <a href="http://twitter.com/karltryggvason">@karltryggvason</a> on Twitter or
 								send me an email <a href="mailto:ktryggvason@gmail.com">ktryggvason@gmail.com</a>
