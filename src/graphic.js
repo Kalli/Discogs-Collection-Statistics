@@ -7,6 +7,16 @@ import {formatNumber, renderReleaseCard} from "./lib"
 // Basic component for a graph and a scrollama sidebar, contains some reusable methods
 export class GraphicComponent extends Component {
 
+	type(){
+		if (this.props.genre === ""){
+			return "All"
+		}
+		if (["Hip Hop", "Electronic"].includes(this.props.genre)){
+			return "Genre"
+		}
+		return "Style"
+	}
+
     onStepEnter = ({element, data, direction}) => {
 		element.style.backgroundColor = 'lightgoldenrodyellow';
 		this.setState(data);
