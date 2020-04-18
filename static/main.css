@@ -33,9 +33,29 @@ body{
     margin-top: 5rem;
 }
 
-.release-thumb{
-    width: 150px;
-    height: 150px;
+.artist-list{
+    list-style: none;
+    padding-left: 0;
+    padding-top: 10px;
+}
+
+.toggle {
+    cursor: pointer;
+}
+
+.release-thumb-12{
+    min-width: 150px;
+    min-height: 150px;
+}
+
+.release-thumb-6{
+    min-width: 65px;
+    min-height: 65px;
+}
+
+.release-thumb-4{
+    min-width: 25px;
+    min-height: 25px;
 }
 
 .get-started {
@@ -65,6 +85,7 @@ body{
 
 .chart-tooltip h4{
     text-align: center;
+    width: 100%;
 }
 
 .label{

@@ -90,17 +90,17 @@ export class GenresAndStyles extends GraphicComponent{
 			const element = `
 				<li id="treemap-artist-${row}-${index}" onclick="showArtistAlbums(${row}, ${index})">
 					${entry[0]} - ${entry[1].length} Release${entry[1].length > 1 ? "s" : ""}
-					<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+					<span class="glyphicon glyphicon-chevron-down toggle" aria-hidden="true"></span>
 					<div class="hide genres-releases row display-flex releases center-block">
 						${entry[1].reduce(function (acc, e){
-							return acc +'<div class="col-xs-' + width + '">'+renderReleaseCard(e)+"</div>";
+							return acc +'<div class="col-xs-' + width + '">'+renderReleaseCard(e, null, false, width)+"</div>";
 						}, "")}
 					</div>
 				</li>
 				`
 			return links += element
 		}, "")
-		return `<ul>${list}</ul>`
+		return `<ul class="artist-list">${list}</ul>`
 	}
 
 	groupByKey(key, masters){

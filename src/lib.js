@@ -29,13 +29,13 @@ export function createMasterLink(master){
 	return `<a href="https://www.discogs.com/master/${master.id}" target="_blank">${master.title}</a>`
 }
 
-export function renderReleaseCard(master, position=null, showArtistName=false){
+export function renderReleaseCard(master, position, showArtistName, width){
 	const rank = position ? position + "." : ""
 	const artistName = showArtistName ? createArtistLink(master.artists) + " - " : ""
 
 	return `
 		<div class="thumbnail" >
-			<img src=${master.images[0].uri150} alt=${master.title} class="release-thumb" />
+			<img src=${master.images[0].uri150} alt=${master.title} class="release-thumb release-thumb-${width}" />
 			<div class=caption">
 				<p class="text-center" >
 					<span>${rank} ${artistName} ${createMasterLink(master)}</span>

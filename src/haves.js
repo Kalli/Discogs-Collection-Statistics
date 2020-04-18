@@ -22,7 +22,7 @@ class HavesAndWants extends GraphicComponent {
 	createMasterTooltip(master, index){
 		return (`
 			<div class="chart-tooltip haves-wants-tooltip text-center">
-				${renderReleaseCard(master, index+1, true)}
+				${renderReleaseCard(master, index+1, true, 12)}
 			</div>
 		`)
 	}

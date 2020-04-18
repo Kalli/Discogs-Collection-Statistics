@@ -72,7 +72,7 @@ export class GraphicComponent extends Component {
 		return (`
 			<div class="chart-tooltip artist-tooltip text-center">
 				<div class="artist row">
-					${this.state.sort !== index && "haves-wants" ? index + 1 + ". ": ''} ${artist.artistLink}
+					${index? index + 1 + ". ": ''} ${artist.artistLink}
 					<div>
 						<span class="label label-default">
 							Releases: ${artist.masters.length}
@@ -87,7 +87,7 @@ export class GraphicComponent extends Component {
 				</div>
 				<div class="releases row display-flex center-block">
 					${artist.masters.reduce(function (acc, e) {
-						return acc + '<div class="col-xs-' + width + ' clearfix">' + renderReleaseCard(e) + "</div>";
+						return acc + '<div class="col-xs-' + width + ' clearfix">' + renderReleaseCard(e, index, false,  width) + "</div>";
 					}, "")}
 				</div>
 			</div>
