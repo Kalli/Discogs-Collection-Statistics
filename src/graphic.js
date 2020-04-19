@@ -43,7 +43,7 @@ export class GraphicComponent extends Component {
 		const classNames = "col-xs-12 col-md-4 scroller" + (this.props.offset? " col-md-pull-8" : "")
         return (
             <div className={classnames(this.props.classes.scroller, classNames)}>
-				<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.33}>
+				<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.90} >
 					{steps}
 				</Scrollama>
 			</div>
