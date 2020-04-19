@@ -103,6 +103,7 @@ class App extends Component{
 			['Genres:', ''],
             ["Electronic", "most-collected-electronic-masters.json"],
             ["Hip Hop", "most-collected-hip-hop-masters.json"],
+            ["Jazz", "most-collected-jazz-masters.json"],
 			['Styles:', ''],
             ["Drum & Bass", "most-collected-electronic-drum-n-bass-masters.json"],
             ["Dubstep", "most-collected-electronic-dubstep-masters.json"],
