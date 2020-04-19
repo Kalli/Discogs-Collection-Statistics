@@ -106,8 +106,9 @@ export class GenresAndStyles extends GraphicComponent{
 		const byKey = masters.reduce((accumulator, master) => {
 			if (key in master){
 				master[key].forEach((item) => {
-					const styleForGenre = !["Electronic", "Hip Hop"].includes(this.state.selectedGenre)
-					if (key === "genres" || styleForGenre || styleGenreMap[item] === this.state.selectedGenre){
+					const relevantGenre = key === "genres" || styleGenreMap[item] === this.state.selectedGenre
+					const relevantStyle = this.type() === "Style" && item !== this.state.selectedGenre
+					if ( relevantGenre || relevantStyle ){
 						accumulator[item] ? accumulator[item].push(master) : accumulator[item] = [master]
 					}
 				})
@@ -240,7 +241,7 @@ export class GenresAndStyles extends GraphicComponent{
 	}
 
 	getSteps(classes, genreData, stylesData, selectedGenre){
-		if (genreData.length > 1){
+		if (this.type() === "All"){
 			return ([
 				{
 					data: {state: 1},
@@ -289,20 +290,27 @@ export class GenresAndStyles extends GraphicComponent{
 			data: {state: 1},
 			paragraphs: <>
 				<p>
-					Each genre has a number of different styles, meant for more narrow categorization
-					{stylesData.length > 0 &&
+					Each genre has a number of different styles, meant for more narrow categorization.
+					{this.type() === "Genre" && <>
+						{" "}The most common styles for <em>{selectedGenre}</em> are
+					</>
+					}
+					{this.type() === "Style" && <>
+						{" "}For the most collected releases in the <em>{selectedGenre}</em> the most common other
+						styles are
+					</>
+					}
+					{stylesData.length >0 &&
 						<>
-							. For <em>{selectedGenre}</em> the most common styles
-							are <em>{stylesData[0][0]}</em> ({stylesData[0][1]} releases)
+						 {" "}<em>{stylesData[0][0]}</em> (
+						{stylesData[0][1]} releases)&nbsp;
 						</>
 					}
-					{stylesData.length > 1 && " "}
 					{stylesData.length > 1 &&
-						<>
-							and <em>{stylesData[1][0]}</em> ({stylesData[1][1]} releases)
-						</>
-					}
-					.
+					<>
+						and <em>{stylesData[1][0]}</em> ({stylesData[1][1]} releases)
+					</>
+					}.
 				</p>
 				<p>
 					You can click or hover over each style to see the artists and releases associated with it.
@@ -318,7 +326,7 @@ export class GenresAndStyles extends GraphicComponent{
 			e.parentNode.removeChild(e)
 		})
 
-		const singleGenre = genre !== ""
+		const singleGenre = this.type() !== "All"
 
 		const genreData = singleGenre? [] : this.groupByKey("genres", data.masters)
 		const genres = this.renderGenres(genreData)

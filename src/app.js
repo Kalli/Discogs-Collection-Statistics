@@ -105,7 +105,7 @@ class App extends Component{
             ["Hip Hop", "most-collected-hip-hop-masters.json"],
             ["Jazz", "most-collected-jazz-masters.json"],
 			['Styles:', ''],
-            ["Drum & Bass", "most-collected-electronic-drum-n-bass-masters.json"],
+            ["Drum n Bass", "most-collected-electronic-drum-n-bass-masters.json"],
             ["Dubstep", "most-collected-electronic-dubstep-masters.json"],
             ["House", "most-collected-electronic-house-masters.json"],
             ["Jungle", "most-collected-electronic-jungle-masters.json"],
