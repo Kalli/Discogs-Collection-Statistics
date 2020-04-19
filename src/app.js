@@ -57,7 +57,7 @@ class App extends Component{
     }
 
 	handleGenreChange = (e) => {
-		this.setState({genre: e.target.value})
+		this.setState({genre: e.target.value, loading: true})
 	}
 
 	navbar = (genres) => {
