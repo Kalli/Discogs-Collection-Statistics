@@ -1,9 +1,20 @@
+
+:root {
+    --main-text-color: #000000;
+    --main-bg-color: #ffffff;
+    --first-bg-color: #373a47;
+    --a-color: #337ab7;
+    --ui-item-color: #373a47;
+}
+
 .main{
     height:200px;
 }
 
 body{
     font-size: 16px;
+    color: var(--main-text-color);
+    background-color: var(--main-bg-color);
 }
 
 .wrapper {
@@ -32,7 +43,7 @@ body{
 }
 
 .intro-text{
-    background: #ffffff;
+    background: var(--main-bg-color);
     border-radius:15px;
     margin-top: 5rem;
 }
@@ -195,13 +206,18 @@ body{
 }
 
 .navbar{
-    background-color: white;
+    background-color: var(--main-bg-color);
+    color: var(--main-text-color);
     -webkit-box-shadow: 0 0 7px 1px #c9c9c9;
     box-shadow: 0 0 7px 1px #c9c9c9;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 10;
+}
+
+.navbar a{
+    color: var(--a-color);
 }
 
 .footer{
@@ -223,7 +239,7 @@ body{
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-    background: #373a47;
+    background: var(--ui-item-color);
 }
 
 /* Color/shape of burger icon bars on hover*/
@@ -253,7 +269,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* General sidebar styles */
 .bm-menu {
-    background: #373a47;
+    background-color: var(--first-bg-color);
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
     z-index: 100;
