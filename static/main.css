@@ -20,6 +20,10 @@ body{
     padding: 10rem 1rem 1rem 1rem;
 }
 
+.jumbotron p{
+    font-size: 1.2em;
+}
+
 .interlude{
     height: 10vh;
     width: 100%;
@@ -186,6 +190,7 @@ body{
 
 .section h2{
     margin-bottom: 0;
+    margin-top: 30px;
     padding-bottom: 0;
 }
 
@@ -277,6 +282,9 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /*!* mobile *!*/
 @media (max-width: 991.98px) {
+    body{
+        font-size: 20px;
+    }
 
     .scroller{
         /* Allow clicking on the graphic layer underneath*/
@@ -286,7 +294,19 @@ Note: Beware of modifying this element as it can break the animations - you shou
     .scroller .step{
 		height: 50vh;
         background: white;
-        margin-bottom: 100vh;
+        margin-bottom: 100vh !important;
         pointer-events: auto;
+    }
+
+    .bm-burger-button {
+        position: fixed;
+        width: 36px;
+        height: 30px;
+        left: 24px;
+        top: 36px;
+    }
+
+    .genres-tooltip ul, .decade-tooltip div, .country-tooltip ol, .gender-tooltip ol{
+        font-size: 1.5em;
     }
 }

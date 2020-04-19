@@ -161,7 +161,7 @@ export class Decades extends GraphicComponent{
 		}, {})
 
 		const decade = Object.keys(years).reduce((list, year) => {
-			const heading = `<h6 class="text-center">${year} - ${years[year].length} Releases</h6>`
+			const heading = `<h4 class="text-center">${year} - ${years[year].length} Releases</h4>`
 			const masters= years[year].reduce((acc, master) => {
 				return acc += `<li>${createArtistLink(master.artists)} - ${createMasterLink(master)}</li>`
 			}, "")

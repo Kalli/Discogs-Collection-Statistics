@@ -82,8 +82,8 @@ class App extends Component{
 		return(
 			<nav className="navbar" id={'nav'}>
 				<Menu className='pull-left nav-menu'>
-					<h2>Discogs Collection Statistics</h2>
-					<h3>Table of contents</h3>
+					<h3>Discogs Collection Statistics</h3>
+					<h4>Table of contents</h4>
 					{menuItems.map((e, index)=><a key={index} href={'#'+e[0]}>{e[1]}</a>)}
 					<hr/>
 					{genreDropdown}
@@ -136,19 +136,22 @@ class App extends Component{
 								Exploring the Most Collected and Coveted Records on Discogs
 							</p>
 							<p>
-								<a href="http://www.discogs.com" target="_blank">Discogs</a> is a user built database and marketplace for recorded music.
-								Many collectors, dj's and other music enthusiasts use the site to catalogue and keep track of their record collection and wantlist.
-								A compilation of these want and have statistics can be found for every release on Discogs.
+								<a href="http://www.discogs.com" target="_blank">Discogs</a> is a user built database
+								and marketplace for recorded music. Many collectors, dj's and other music enthusiasts
+								use the site to catalogue and keep track of their record collection and wantlist. A
+								compilation of these want and have statistics can be found for every release on Discogs.
 							</p>
 							<p>
-								On this page you can explore some aspects of the most collected and coveted music releases on Discogs.
-								Hopefully it will provide insight into questions like: how many users have added each release to their collection?
-								Who are the artists and bands behind these recordings? Where are they come from?
-								When were they released and which genres and styles do they belong to?
+								On this page I've gathered data on on the most collected and coveted music releases
+								on Discogs. Hopefully it will provide insight into questions like: how many users have
+								added each release to their collection? Who are the artists and bands behind these
+								recordings? Where are they come from? When did this releases come out and which
+								genres and styles do they belong to?
 							</p>
 							<p>
-								You can look at the most collected records overall or filter down to a handful of my favourite styles and genres.
-								Click the menu for more options and information. I hope you enjoy it.
+								You can look at the most collected records overall or filter down to a handful of my
+								favourite styles and genres. Click the menu for more options and information.
+								I hope you enjoy it.
 							</p>
 							<h3 className={'get-started text-center'}>
 								Scroll down to get started!
