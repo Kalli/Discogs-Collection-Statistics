@@ -11,7 +11,7 @@ export class GraphicComponent extends Component {
 		if (this.props.genre === ""){
 			return "All"
 		}
-		if (["Hip Hop", "Electronic"].includes(this.props.genre)){
+		if (["Hip Hop", "Electronic", "Jazz"].includes(this.props.genre)){
 			return "Genre"
 		}
 		return "Style"
