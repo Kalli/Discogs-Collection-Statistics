@@ -274,3 +274,19 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
 }
+
+/*!* mobile *!*/
+@media (max-width: 991.98px) {
+
+    .scroller{
+        /* Allow clicking on the graphic layer underneath*/
+        pointer-events: none;
+    }
+
+    .scroller .step{
+		height: 50vh;
+        background: white;
+        margin-bottom: 100vh;
+        pointer-events: auto;
+    }
+}
