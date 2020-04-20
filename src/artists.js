@@ -46,14 +46,12 @@ class Artists extends GraphicComponent {
 	}
 
 	onStepEnter = ({element, data, direction}) => {
-		element.style.backgroundColor = 'lightgoldenrodyellow'
 		this.resizePoints(data.changeSize)
 		this.setState({sort: data.sort})
 	}
 
 	onStepExit = ({element, data, direction}) => {
 		this.resizePoints(data.changeSize)
-		element.style.backgroundColor = '#fff'
 	}
 
 	componentWillUnmount() {
@@ -61,7 +59,6 @@ class Artists extends GraphicComponent {
 	}
 
 	getSteps(artists, averageWantToHave, correlation){
-		const a = artists
 		return [
 			{
 				data: {'sort': 'have', 'changeSize': false},
@@ -125,8 +122,6 @@ class Artists extends GraphicComponent {
 		]
 
 	}
-
-
 
 	render(){
 		const { classes } = this.props;
@@ -225,34 +220,39 @@ class Artists extends GraphicComponent {
 			</div>
 		const legend = this.state.sort === "haves-wants" ? 'none' : { position: 'bottom' }
 		const duration = (0 === this.state.size || this.state.size === 100) ? 1000 : 0
+
+		const options = this.graphicOptions({
+			height: '80vh',
+			className: "center-block",
+			chartType: "ScatterChart",
+			loader: <div>Loading Chart</div>,
+			data: [headers, ...data],
+			options: {
+				title: title,
+				legend: legend,
+				theme: 'material',
+				tooltip: {isHtml: true, trigger: 'both'},
+				animation: {startup: true, duration: duration},
+				pointSize: 5,
+				isStacked: 'relative',
+				chartArea: {'width': '80%', 'height': '80%'},
+				hAxis: hAxis,
+				vAxis: vAxis,
+			},
+			chartEvents: [{
+				eventName: "ready",
+				callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
+			}]
+		})
+
+
 		return (
 			<div id="artists" className={"col-xs-12 col-md-12"}>
 				<div className={classnames(classes.graphic, this.graphicClassNames())}>
 				<h2>Artists</h2>
 				<div className={"col-xs-12"}>
-					<Chart
-						height={'80vh'}
-						className={"center-block"}
-						chartType={"ScatterChart"}
-						loader={<div>Loading Chart</div>}
-						data={[headers, ...data]}
-						options={{
-							title: title,
-							legend: legend,
-							theme: 'material',
-							tooltip: {isHtml: true, trigger: 'both'},
-							animation: {startup: true, duration: duration},
-							pointSize: 5,
-							isStacked: 'relative',
-							chartArea: {'width': '80%', 'height': '80%'},
-							hAxis: hAxis,
-							vAxis: vAxis,
-						}}
-						chartEvents={[{
-							eventName: "ready",
-							callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
-						}]}
-					/>
+					<Chart {...options} />
+
 				</div>
 				<div className="chart-controls text-center form">
 					{sortControls}

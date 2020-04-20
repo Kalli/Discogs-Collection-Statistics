@@ -91,39 +91,40 @@ export class Decades extends GraphicComponent{
 
 		const scrollama = this.createScrollama(this.getSteps(sortedData))
 
+		const options = this.graphicOptions({
+			height: 700,
+			className: "center-block",
+			chartType: "ColumnChart",
+			loader: <div>Loading Chart</div>,
+			data: [headers, ...data],
+			options: {
+				title: `Most Collected ${this.props.genre} Master Releases - By ${this.state.type} Released`,
+				animation: {duration: 1500},
+				legend: { position: 'bottom' },
+				theme: 'material',
+				tooltip: {isHtml: true, trigger: 'selection'},
+				chartArea: {'width': '80%', 'height': '80%'},
+				hAxis: {
+					title: this.state.type,
+				},
+				vAxis: {
+					title: 'Number of Releases',
+					format: 0,
+					viewWindow: {min: 0},
+				},
+			},
+			chartEvents: [{
+				eventName: "ready",
+				callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
+			}]
+		})
+
 		return (
 			<div id="years-and-decades" className="col-xs-12">
 				<div className={classnames(classes.graphic, this.graphicClassNames())}>
 				<h2>Years and Decades</h2>
 					<div className={"col-xs-12"}>
-					<Chart
-						height={700}
-						className={"center-block"}
-						chartType="ColumnChart"
-						loader={<div>Loading Chart</div>}
-						data={[headers, ...data]}
-						options={{
-							title: `Most Collected ${this.props.genre} Master Releases - By ${this.state.type} Released`,
-							animation: {duration: 1500},
-							legend: { position: 'bottom' },
-							theme: 'material',
-							tooltip: {isHtml: true, trigger: 'selection'},
-							chartArea: {'width': '80%', 'height': '80%'},
-							hAxis: {
-								title: this.state.type,
-							},
-							vAxis: {
-								title: 'Number of Releases',
-								format: 0,
-								viewWindow: {min: 0},
-							},
-						}}
-
-						chartEvents={[{
-							eventName: "ready",
-							callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
-						}]}
-					/>
+					<Chart {...options} />
 					<div className="chart-controls text-center">
 						<h5>
 							Show:

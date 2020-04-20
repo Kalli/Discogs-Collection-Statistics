@@ -1,10 +1,10 @@
 
 :root {
-    --main-text-color: #000000;
-    --main-bg-color: #ffffff;
-    --first-bg-color: #373a47;
-    --a-color: #337ab7;
-    --ui-item-color: #373a47;
+    --main-text-color: #ffffff;
+    --main-bg-color: #062F4F;
+    --first-bg-color: #284C69;
+    --a-color: #61BAFF;
+    --ui-item-color: #138CE8;
 }
 
 .main{
@@ -15,6 +15,14 @@ body{
     font-size: 16px;
     color: var(--main-text-color);
     background-color: var(--main-bg-color);
+}
+
+a{
+    color: var(--a-color);
+}
+
+text {
+    fill: var(--main-text-color);
 }
 
 .wrapper {
@@ -44,7 +52,7 @@ body{
 
 .intro-text{
     background: var(--main-bg-color);
-    border-radius:15px;
+    border-radius: 15px;
     margin-top: 5rem;
 }
 
@@ -92,6 +100,11 @@ body{
 .content{
     margin-top: 1.5em;
     font-size: 130%;
+}
+
+.google-visualization-tooltip{
+    color: #000000;
+    border-radius: 30px;
 }
 
 .chart-tooltip{
@@ -182,9 +195,11 @@ body{
   display: flex;
   flex-wrap: wrap;
 }
+
 .row.display-flex > [class*='col-'] {
     display: flex !important;
     flex-wrap: wrap;
+    align-content: flex-start;
 }
 
 .show{

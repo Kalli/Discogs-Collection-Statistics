@@ -129,27 +129,30 @@ export class TimeLine extends GraphicComponent{
             { type: 'date', id: 'End' }
         ]
 		const scrollama = this.createScrollama(this.getSteps(mostReleases, longestSpan))
+		const options = this.graphicOptions({
+			height: '100vh',
+			className: "center-block",
+			chartType: "Timeline",
+			loader: <div>Loading Chart</div>,
+			data: [headers, ...timeline],
+			options: {
+				title: `Most Collected ${this.props.genre} Master Releases - Artist Timeline`,
+				timeline: {
+					singleColor: '#5e97f6',
+					showRowLabels: (this.type() !== "Style"),
+					rowLabelStyle: {color: this.textColor},
+					barLabelStyle: {color: this.textColor}
+				},
+				chartArea: {'width': '80%', 'height': '100%'},
+			}
+		})
 
 		return (
-			<div id="years-and-decades" className="col-xs-12">
+			<div id="timeline" className="col-xs-12">
 				<div className={classnames(classes.graphic, this.graphicClassNames())}>
 					<h2>Timeline</h2>
 					<div className={"col-xs-12"}>
-						<Chart
-							height={'100vh'}
-							className={"center-block"}
-							chartType={"Timeline"}
-							loader={<div>Loading Chart</div>}
-							data={[headers, ...timeline]}
-							options={{
-								title: `Most Collected ${this.props.genre} Master Releases - Artist Timeline`,
-								timeline: {
-									singleColor: '#5e97f6',
-									showRowLabels: (this.type() !== "Style")
-								},
-								chartArea: {'width': '80%', 'height': '100%'},
-							}}
-						/>
+						<Chart {...options} />
 					</div>
 			</div>
 			{scrollama}

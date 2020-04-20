@@ -2,10 +2,15 @@ import React, { Component} from "react"
 import {Scrollama, Step} from "react-scrollama"
 import classnames from 'classnames'
 import {formatNumber, renderReleaseCard} from "./lib"
+import {merge} from 'lodash'
 
 
 // Basic component for a graph and a scrollama sidebar, contains some reusable methods
 export class GraphicComponent extends Component {
+	backgroundColor = "#062F4F"
+	secondaryColor = "#61BAFF"
+	tertiaryColor = "#305D80"
+	textColor =  "#ffffff"
 
 	type(){
 		if (this.props.genre === ""){
@@ -18,19 +23,49 @@ export class GraphicComponent extends Component {
 	}
 
     onStepEnter = ({element, data, direction}) => {
-		element.style.backgroundColor = 'lightgoldenrodyellow';
 		this.setState(data);
 	}
 
-	onStepExit = ({element, data, direction}) => {
-		element.style.backgroundColor = '#fff';
-	}
+	onStepExit = ({element, data, direction}) => {}
+
 
 	graphicClassNames(){
-    	return "col-xs-12 col-md-8 section " + (this.props.offset? "col-md-push-4" : "")
+    	return "graphic col-xs-12 col-md-8 section " + (this.props.offset? "col-md-push-4" : "")
+	}
+
+	graphicOptions(options){
+		return merge({}, options, {
+			options: {
+				backgroundColor: this.backgroundColor,
+				titleTextStyle: {
+					color: this.textColor
+				},
+				legendTextStyle:{
+					color: this.textColor
+				},
+				hAxis: {
+					textStyle:{
+						color: this.textColor
+					},
+					titleTextStyle: {
+						color: this.textColor
+					}
+				},
+				vAxis: {
+					textStyle:{
+						color: this.textColor
+					},
+					titleTextStyle: {
+						color: this.textColor
+					}
+				},
+			}
+		})
 	}
 
 	createScrollama(stepsData){
+		const offset = window.innerWidth > 992 ? 0.45 : 0.9
+
 		const steps = stepsData.map((step, index) => {
 			return (
 			<Step key={index} data={step.data}>
@@ -43,7 +78,7 @@ export class GraphicComponent extends Component {
 		const classNames = "col-xs-12 col-md-4 scroller" + (this.props.offset? " col-md-pull-8" : "")
         return (
             <div className={classnames(this.props.classes.scroller, classNames)}>
-				<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={0.90} >
+				<Scrollama onStepEnter={this.onStepEnter} onStepExit={this.onStepExit} offset={offset} >
 					{steps}
 				</Scrollama>
 			</div>
@@ -87,7 +122,7 @@ export class GraphicComponent extends Component {
 				</div>
 				<div class="releases row display-flex center-block">
 					${artist.masters.reduce(function (acc, e) {
-						return acc + '<div class="col-xs-' + width + ' clearfix">' + renderReleaseCard(e, index, false,  width) + "</div>";
+						return acc + '<div class="col-xs-' + width + ' clearfix">' + renderReleaseCard(e, "", false,  width) + "</div>";
 					}, "")}
 				</div>
 			</div>
@@ -109,7 +144,7 @@ export const styles = {
 		margin: '0 auto 2rem auto',
 		paddingTop: 100,
 		paddingBottom: 100,
-		height: '100vh',
+		height: '80vh',
 		'& p': {
 			textAlign: 'left',
 			padding: '1rem',

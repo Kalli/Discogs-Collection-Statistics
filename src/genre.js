@@ -38,12 +38,7 @@ export class GenresAndStyles extends GraphicComponent{
 	}
 
 	onStepEnter = ({element, data, direction}) => {
-		element.style.backgroundColor = 'lightgoldenrodyellow';
 		this.setState(this.resizeCharts(data.state))
-	}
-
-	onStepExit = ({element, data, direction}) => {
-		element.style.backgroundColor = '#fff';
 	}
 
 	generateTooltip(key, values, index, hideArtist){
@@ -168,34 +163,36 @@ export class GenresAndStyles extends GraphicComponent{
 		]
 		const max = Math.max(...genres.map(genre => genre[1]))
 
+		const options = this.graphicOptions({
+			height: this.state.genre.height,
+			toolTip: {fontSize: "14px" },
+			chartType: "ColumnChart",
+			data: [headers, ...genres] ,
+			options: {
+				vAxis: {
+					direction: this.state.genre.direction,
+					viewWindow: {max: max},
+					gridlines: this.state.genre.gridlines,
+					textPosition: this.state.genre.textPosition
+				},
+				chartArea: {height: this.state.genre.areaHeight, width: '90%', top: '5%'},
+				title: `Most Collected ${this.props.genre} Releases by Genre`,
+				animation: {duration: 1500},
+				bar: {groupWidth: "95%"},
+				headerHeight: 15,
+				fontColor: "black",
+				legend: { position: 'none' },
+				tooltip: {isHtml: true, trigger: 'both'},
+			},
+			chartEvents: [{
+				eventName: "ready",
+				callback: ({ chartWrapper, google }) => this.clickGenre(chartWrapper, google, genres)
+			}]
+		})
+
 		return (
 			<AnimateHeight height={this.state.genre.height} duration={1500} >
-				<Chart
-					height={this.state.genre.height}
-					toolTip={{fontSize: "14px" }}
-					chartType="ColumnChart"
-					data={[headers, ...genres]}
-					options={{
-						vAxis: {
-							direction: this.state.genre.direction,
-							viewWindow: {max: max},
-							gridlines: this.state.genre.gridlines,
-							textPosition: this.state.genre.textPosition
-						},
-						chartArea: {height: this.state.genre.areaHeight, width: '90%', top: '5%'},
-						title: `Most Collected ${this.props.genre} Releases by Genre`,
-						animation: {duration: 1500},
-						bar: {groupWidth: "95%"},
-						headerHeight: 15,
-						fontColor: "black",
-						legend: { position: 'none' },
-						tooltip: {isHtml: true, trigger: 'both'},
-					}}
-					chartEvents={[{
-						eventName: "ready",
-						callback: ({ chartWrapper, google }) => this.clickGenre(chartWrapper, google, genres)
-					}]}
-				/>
+				<Chart {...options} />
 			</AnimateHeight>
 		)
 	}
@@ -215,29 +212,29 @@ export class GenresAndStyles extends GraphicComponent{
 		const max = Math.max(...styles.map(style => style[1]))
 		const height = singleGenre? '80vh' : 500
 		const title = singleGenre? genre : this.state.selectedGenre
-		return (
-			<Chart
-				height={height}
-				toolTip={{fontSize: "14px" }}
-				chartType="ColumnChart"
-				data={[headers, ...styles]}
-				options={{
-					vAxis: {viewWindow: {max: max}},
-					title: `Most Collected ${title} Releases by Style`,
-					chartArea: {width: '90%', height: '70%', top: '5%'},
-					animation: {duration: 1000},
-					bar: {groupWidth: "85%"},
-					headerHeight: 15,
-					fontColor: "black",
-					legend: { position: 'none' },
-					tooltip: {isHtml: true, trigger: 'both'},
-				}}
-				chartEvents={[{
-					eventName: "ready",
-					callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
-				}]}
-			/>
-		)
+
+        const options = this.graphicOptions({
+			height: height,
+			toolTip: {fontSize: "14px" },
+			chartType: "ColumnChart",
+			data: [headers, ...styles],
+			options: {
+				vAxis: {viewWindow: {max: max}},
+				title: `Most Collected ${title} Releases by Style`,
+				chartArea: {width: '90%', height: '70%', top: '5%'},
+				animation: {duration: 1000},
+				bar: {groupWidth: "85%"},
+				headerHeight: 15,
+				fontColor: "black",
+				legend: { position: 'none' },
+				tooltip: {isHtml: true, trigger: 'both'},
+			},
+			chartEvents: [{
+				eventName: "ready",
+				callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
+			}]
+		})
+		return (<Chart {...options} />)
 	}
 
 	getSteps(classes, genreData, stylesData, selectedGenre){

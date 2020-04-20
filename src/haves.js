@@ -1,5 +1,5 @@
-import {Chart} from 'react-google-charts';
 import React from "react"
+import {Chart} from 'react-google-charts';
 import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink} from "./lib.js"
 import {correlationCopy, pearsonCorrelation} from "./lib.js"
 import injectSheet from 'react-jss';
@@ -194,36 +194,38 @@ class HavesAndWants extends GraphicComponent {
 				</label>
 			</div>
 		const legend = this.state.type === "versions" ? 'none' : { position: 'bottom' }
+		const options = this.graphicOptions({
+			height:'80vh',
+			className:"center-block",
+			chartType:"ScatterChart",
+			loader:<div>Loading Chart</div>,
+			data:[headers, ...data],
+			options:{
+				title: title,
+				curveType: 'function',
+				legend: legend,
+				theme: 'material',
+				tooltip: {isHtml: true, trigger: 'both'},
+				animation: {duration: 1500},
+				pointSize: 5,
+				isStacked: 'relative',
+				chartArea: {'width': '80%', 'height': '75%'},
+				hAxis: hAxis,
+				vAxis: vAxis,
+			},
+			chartEvents:[{
+				eventName: "ready",
+				callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
+			}]
+		})
+
 
 		return (
 			<div id="haves-and-wants" className={"col-xs-12 col-md-12 parent"}>
 				<div className={classnames(classes.graphic, this.graphicClassNames())}>
 					<h2>Haves and Wants</h2>
 					<div className={"col-xs-12"}>
-						<Chart
-							height={'80vh'}
-							className={"center-block"}
-							chartType={"ScatterChart"}
-							loader={<div>Loading Chart</div>}
-							data={[headers, ...data]}
-							options={{
-								title: title,
-								curveType: 'function',
-								legend: legend,
-								theme: 'material',
-								tooltip: {isHtml: true, trigger: 'both'},
-								animation: {duration: 1500},
-								pointSize: 5,
-								isStacked: 'relative',
-								chartArea: {'width': '80%', 'height': '75%'},
-								hAxis: hAxis,
-								vAxis: vAxis,
-							}}
-							chartEvents={[{
-								eventName: "ready",
-								callback: ({ chartWrapper, google }) => closeTooltipsOnClicks(chartWrapper, google)
-							}]}
-						/>
+						<Chart {...options} />
 					</div>
 					<div className="chart-controls text-center form">
 						{sortControls}
