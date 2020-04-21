@@ -324,7 +324,6 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
     .scroller .step{
 		height: 50vh;
-        background: white;
         margin-bottom: 100vh !important;
         pointer-events: auto;
     }
