@@ -31,7 +31,7 @@ text {
     align-items: stretch;
 }
 
-#intro {
+#intro, #outro{
     height: 100vh;
     background: url('montage.jpg') center;
     background-attachment: fixed;
@@ -50,7 +50,7 @@ text {
     background-attachment: fixed;
 }
 
-.intro-text{
+.intro-text, .outro-text{
     background: var(--main-bg-color);
     border-radius: 15px;
     margin-top: 5rem;

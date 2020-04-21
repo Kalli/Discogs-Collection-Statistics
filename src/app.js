@@ -180,11 +180,10 @@ class App extends Component{
 					{artistsByCountry}
 					<div className={"col-xs-12 interlude"} />
 					{artistsByGender}
-					<div className={"col-xs-12 interlude"} />
 
 					<div id="outro" className="col-xs-12">
-                        <h2>Outro</h2>
-						<div className="col-xs-12 col-md-offset-2 col-md-8 text-left">
+						<div className="jumbotron col-xs-12 col-md-offset-2 col-md-8 text-left outro-text">
+	                        <h2>Outro</h2>
                             <p>
 								I hope this summary of the most collected Discogs releases was informative and entertaining to you.
 								Thanks to the Discogs and MusicBrainz user communities for their tireless work on cataloguing the worlds music.
