@@ -52,10 +52,11 @@ export class GenresAndStyles extends GraphicComponent{
 	}
 
 	resizeCharts(state){
+		const height = window.innerHeight
 		return {
 			showStyles: state !== 1,
 			genre: {
-				height: state === 1? 800 : 250,
+				height: state === 1? 0.8*height : 0.2*height,
 				areaHeight: state === 1? '75%' : '10%',
 				direction: state === 1? 1 : -1,
 				gridlines: state === 1 ? null : {color: 'transparent'},
@@ -133,8 +134,9 @@ export class GenresAndStyles extends GraphicComponent{
 		google.visualization.events.removeAllListeners(chart)
 
 		google.visualization.events.addListener(chart, "click", e => {
-			if (e.targetID.indexOf("bar") !== -1 && this.state.showStyles){
-				const column = e.targetID.split("#")[2]
+			if (this.state.showStyles && (e.targetID.indexOf("bar") !== -1 || e.targetID.indexOf("label") !== -1)){
+				const splits = e.targetID.split("#")
+				const column = splits[0] === "bar"? splits[2] : splits[3]
 				this.setState({selectedGenre: genres[column][0]})
 			}
 			if (validTargets.every((target) => { return e.targetID.indexOf(target) === -1})){
@@ -210,7 +212,7 @@ export class GenresAndStyles extends GraphicComponent{
 		]
 
 		const max = Math.max(...styles.map(style => style[1]))
-		const height = singleGenre? '80vh' : 500
+		const height = singleGenre? window.innerHeight : 0.7 * window.innerHeight
 		const title = singleGenre? genre : this.state.selectedGenre
 
         const options = this.graphicOptions({
@@ -267,7 +269,7 @@ export class GenresAndStyles extends GraphicComponent{
 							{stylesData.length >0 &&
 								<>
 								The most common styles for <em>{selectedGenre}</em> are <em>{stylesData[0][0]}</em> (
-								{stylesData[0][1]} releases)&nbsp;
+								{stylesData[0][1]} releases){" "}
 								</>
 							}
 							{stylesData.length > 1 &&
@@ -277,7 +279,8 @@ export class GenresAndStyles extends GraphicComponent{
 							}.
 						</p>
 						<p>
-							Again you can click or hover over each style to see the artists and releases associated with it.
+							Click a genre above to see which of its styles are most common. Again you can click or
+							hover over each style to see the artists and releases associated with it.
 						</p>
 					</>
 				}
@@ -300,7 +303,7 @@ export class GenresAndStyles extends GraphicComponent{
 					{stylesData.length >0 &&
 						<>
 						 {" "}<em>{stylesData[0][0]}</em> (
-						{stylesData[0][1]} releases)&nbsp;
+						{stylesData[0][1]} releases){" "}
 						</>
 					}
 					{stylesData.length > 1 &&
