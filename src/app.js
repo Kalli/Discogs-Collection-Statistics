@@ -142,14 +142,14 @@ class App extends Component{
 								compilation of these want and have statistics can be found for every release on Discogs.
 							</p>
 							<p>
-								On this page I've gathered data on on the most collected and coveted music releases
+								On this page I've gathered data on on the 250 most collected and coveted music releases
 								on Discogs. Hopefully it will provide insight into questions like: how many users have
 								added each release to their collection? Who are the artists and bands behind these
-								recordings? Where are they come from? When did this releases come out and which
+								recordings? Where do they come from? When did this releases come out and which
 								genres and styles do they belong to?
 							</p>
 							<p>
-								You can look at the most collected records overall or filter down to a handful of my
+								You can look at the most collected records overall or select from to a handful of my
 								favourite styles and genres. Click the menu for more options and information.
 								I hope you enjoy it.
 							</p>
@@ -185,9 +185,11 @@ class App extends Component{
 						<div className="jumbotron col-xs-12 col-md-offset-2 col-md-8 text-left outro-text">
 	                        <h2>Outro</h2>
                             <p>
-								I hope this summary of the most collected Discogs releases was informative and entertaining to you.
-								Thanks to the Discogs and MusicBrainz user communities for their tireless work on cataloguing the worlds music.
-								The code used to collect and visualize this data can be found on <a href="https://github.com/kalli/Discogs-Collection-Statistics/">Github</a>.
+								I hope this summary of the most collected Discogs releases was informative and
+								entertaining to you. Thanks to the Discogs and MusicBrainz user communities for
+								their tireless work on cataloguing the worlds music. The code used to collect and
+								visualize this data can be found
+								on <a href="https://github.com/kalli/Discogs-Collection-Statistics/">Github</a>.
 								If you see any bugs or inconsistencies in the data you can let me know
 								on <a href="http://twitter.com/karltryggvason">@karltryggvason</a> on Twitter or
 								send me an email <a href="mailto:ktryggvason@gmail.com">ktryggvason@gmail.com</a>
@@ -198,7 +200,7 @@ class App extends Component{
 								The one that ties together all the different physical editions on Discogs, such as
 								CD releases, vinyl versions, cassettes and other more esoteric formats. For
 								instance <a href="https://www.discogs.com/Aphex-Twin-Selected-Ambient-Works-85-92/master/565">45 versions</a> of <i>Selected Ambient Works</i> have
-								been catalogued on Discogs under the master relases.
+								been catalogued on Discogs under the master releases.
 							</p>
 							<p>
 								The data displayed on this page was gathered at mid April 2020, the collection numbers
