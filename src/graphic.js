@@ -146,7 +146,7 @@ export const styles = {
 		margin: '0 auto 2rem auto',
 		paddingTop: 100,
 		paddingBottom: 100,
-		height: '80vh',
+		'min-height': '80vh',
 		'& p': {
 			textAlign: 'left',
 			padding: '1rem',

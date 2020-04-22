@@ -92,7 +92,7 @@ export class Decades extends GraphicComponent{
 		const scrollama = this.createScrollama(this.getSteps(sortedData))
 
 		const options = this.graphicOptions({
-			height: 700,
+			height: window.innerHeight * 0.80,
 			className: "center-block",
 			chartType: "ColumnChart",
 			loader: <div>Loading Chart</div>,

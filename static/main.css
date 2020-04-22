@@ -32,7 +32,7 @@ text {
 }
 
 #intro, #outro{
-    height: 100vh;
+    min-height: 100vh;
     background: url('montage.jpg') center;
     background-attachment: fixed;
     background-size: cover;
@@ -338,7 +338,13 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
     .scroller .step{
 		min-height: 50vh;
-        margin-bottom: 100vh !important;
+        margin-bottom: 50vh !important;
+        pointer-events: none;
+    }
+    .scroller .step .content {
         pointer-events: auto;
+    }
+    text {
+        font-size: 0.9em;
     }
 }
