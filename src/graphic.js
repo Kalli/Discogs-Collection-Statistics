@@ -7,10 +7,10 @@ import {merge} from 'lodash'
 
 // Basic component for a graph and a scrollama sidebar, contains some reusable methods
 export class GraphicComponent extends Component {
-	backgroundColor = "#062F4F"
-	secondaryColor = "#61BAFF"
+	textColor =  "#ececec"
+	backgroundColor = "#222831"
+	secondaryColor = "#30475e"
 	tertiaryColor = "#305D80"
-	textColor =  "#ffffff"
 
 	type(){
 		if (this.props.genre === ""){
@@ -70,7 +70,9 @@ export class GraphicComponent extends Component {
 			return (
 			<Step key={index} data={step.data}>
 				<div className={classnames(this.props.classes.step, "step")}>
-					{step.paragraphs}
+					<div className={"content"}>
+						{step.paragraphs}
+					</div>
 				</div>
 			</Step>
 		)})

@@ -1,10 +1,10 @@
 
 :root {
-    --main-text-color: #ffffff;
-    --main-bg-color: #062F4F;
-    --first-bg-color: #284C69;
-    --a-color: #61BAFF;
-    --ui-item-color: #138CE8;
+    --main-text-color: #ececec;
+    --main-bg-color: #222831;
+    --first-bg-color: #30475e;
+    --a-color: #c1a57b;
+    --ui-item-color: #c1a57b;
 }
 
 .main{
@@ -94,7 +94,6 @@ text {
     animation: bounce 0.8s;
     animation-direction: alternate;
     animation-iteration-count: infinite;
-    text-shadow: 1px 1px 1px #ccc;
 }
 
 .content{
@@ -223,8 +222,7 @@ text {
 .navbar{
     background-color: var(--main-bg-color);
     color: var(--main-text-color);
-    -webkit-box-shadow: 0 0 7px 1px #c9c9c9;
-    box-shadow: 0 0 7px 1px #c9c9c9;
+    border-bottom: 2px solid var(--first-bg-color);
     position: fixed;
     top: 0;
     width: 100%;
@@ -235,10 +233,21 @@ text {
     color: var(--a-color);
 }
 
+.navbar h1{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .footer{
     position: fixed;
     margin-bottom: 20px;
     bottom: 0;
+}
+
+.scroller .step .content{
+    background-color: var(--main-bg-color);
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 /* react-burger-menu - https://github.com/negomi/react-burger-menu#styling*/
@@ -259,7 +268,7 @@ text {
 
 /* Color/shape of burger icon bars on hover*/
 .bm-burger-bars-hover {
-    background: #a90000;
+    background: var(--main-text-color);
 }
 
 /* Position and sizing of clickable cross button */
@@ -312,10 +321,15 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 /*!* mobile *!*/
-@media (max-width: 991.98px) {
+@media (max-device-width: 991.98px) {
     body{
         font-size: 20px;
     }
+    .genres-tooltip ul, .decade-tooltip div, .country-tooltip ol, .gender-tooltip ol{
+        font-size: 1.5em;
+    }
+}
+@media (max-width: 991.98px) {
 
     .scroller{
         /* Allow clicking on the graphic layer underneath*/
@@ -323,20 +337,8 @@ Note: Beware of modifying this element as it can break the animations - you shou
     }
 
     .scroller .step{
-		height: 50vh;
+		min-height: 50vh;
         margin-bottom: 100vh !important;
         pointer-events: auto;
-    }
-
-    .bm-burger-button {
-        position: fixed;
-        width: 36px;
-        height: 30px;
-        left: 24px;
-        top: 36px;
-    }
-
-    .genres-tooltip ul, .decade-tooltip div, .country-tooltip ol, .gender-tooltip ol{
-        font-size: 1.5em;
     }
 }
