@@ -136,8 +136,8 @@ class Artists extends GraphicComponent {
 				{type: 'string', role: 'tooltip', 'p': {'html': true}},
 				{type: 'string', role: 'style'}
 			]
-			hAxis = {title: 'Haves'}
-			vAxis = {title: 'Wants'}
+			hAxis = {title: 'Haves', format: "short"}
+			vAxis = {title: 'Wants', format: "short"}
 		}else{
 			headers = [
 				{id: 'position', label: 'position', type: 'number'},
@@ -147,7 +147,7 @@ class Artists extends GraphicComponent {
 				{type: 'string', role: 'tooltip', 'p': {'html': true}},
 			]
 			hAxis = { title: 'Position'}
-			vAxis = {title: 'Count', format: 0, viewWindow: {min: 0}}
+			vAxis = {title: 'Count', format: "short", viewWindow: {min: 0}}
 		}
 
 		const artistKeys = groupByArtist(this.props.data.masters)

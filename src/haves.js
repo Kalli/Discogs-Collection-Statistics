@@ -125,7 +125,7 @@ class HavesAndWants extends GraphicComponent {
 			]
 			title +=  ` - By Number of Versions and ${this.state.sort.toTitleCase()}s`
 			hAxis = {title: 'Versions'}
-			vAxis = {title: this.state.sort.toTitleCase() + 's'}
+			vAxis = {title: this.state.sort.toTitleCase() + 's', format: 'short'}
 		}else{
 			headers = [
 				{id: 'position', label: 'position', type: 'number'},
@@ -136,7 +136,7 @@ class HavesAndWants extends GraphicComponent {
 			]
 			title +=  ' - By Haves and Wants'
 			hAxis = {title: 'Position'}
-			vAxis = {title: 'Count', format: 0, viewWindow: {min: 0}}
+			vAxis = {title: 'Count', format: 'short', viewWindow: {min: 0}}
 		}
 
 		const masters = this.props.data.masters.sort((a, b) => {
