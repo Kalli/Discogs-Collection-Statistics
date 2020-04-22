@@ -10,6 +10,7 @@ import {StyledArtistsByCountry} from './countries.js'
 import {StyledArtistsByGender} from './gender.js'
 import {StyledTimeLine} from "./timeline"
 
+
 class App extends Component{
 
 	constructor(props) {
@@ -18,7 +19,8 @@ class App extends Component{
         this.state = {
         	toggle: true,
             loading: true,
-            genre: "most-collected-masters.json"
+            genre: "most-collected-masters.json",
+			fade: ""
         }
     }
 
@@ -42,8 +44,23 @@ class App extends Component{
             });
     }
 
+    changeBackgroundImage(){
+		const image = this.state.genre.replace("most-collected-", "").replace("masters.json", "")
+		this.setState({fade: "fade-out"})
+		const img = new Image()
+		img.url = image+"montage.jpg"
+
+		window.setTimeout(()=>{
+			Array.from(document.getElementsByClassName('background')).forEach((element) => {
+			element.style.backgroundImage = `url("${image}montage.jpg")`
+		})}, 500)
+
+		window.setTimeout(()=>{this.setState({fade: "fade-in"})}, 500)
+	}
+
     componentDidUpdate(prevProps, prevState) {
     	if (prevState.genre !== this.state.genre) {
+			this.changeBackgroundImage()
     		this.setState({loading: true})
         	this.loadData()
     	}
@@ -126,8 +143,8 @@ class App extends Component{
 		return (
 			<div className="wrapper">
 				{header}
-				<div className="content row">
-					<div id="intro" className="col-xs-12">
+				<div className={"content row " + this.state.fade}>
+					<div id="intro" className={"col-xs-12 background"} >
 						<div className="jumbotron col-xs-12 col-md-offset-2 col-md-8 text-left intro-text">
 							<h1 className="text-center">
 								Discogs Collection Statistics
@@ -168,20 +185,20 @@ class App extends Component{
 					</div>
 
 					{havesAndWants}
-					<div className={"col-xs-12 interlude"} />
+					<div className={"col-xs-12 interlude background"} />
 					{artists}
-					<div className={"col-xs-12 interlude"} />
+					<div className={"col-xs-12 interlude background"} />
 					{genresAndStyles}
-					<div className={"col-xs-12 interlude"} />
+					<div className={"col-xs-12 interlude background"} />
 					{decades}
-					<div className={"col-xs-12 interlude"} />
+					<div className={"col-xs-12 interlude background"} />
 					{timeline}
-					<div className={"col-xs-12 interlude"} />
+					<div className={"col-xs-12 interlude background"} />
 					{artistsByCountry}
-					<div className={"col-xs-12 interlude"} />
+					<div className={"col-xs-12 interlude background"} />
 					{artistsByGender}
 
-					<div id="outro" className="col-xs-12">
+					<div id="outro" className="col-xs-12 background">
 						<div className="jumbotron col-xs-12 col-md-offset-2 col-md-8 text-left outro-text">
 	                        <h2>Outro</h2>
                             <p>
