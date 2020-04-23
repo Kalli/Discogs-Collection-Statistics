@@ -1,7 +1,7 @@
 import React from "react"
 import {Chart} from 'react-google-charts';
 import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink} from "./lib.js"
-import {correlationCopy, pearsonCorrelation} from "./lib.js"
+import {correlationCopy, pearsonCorrelation, Blue, Red} from "./lib.js"
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
 import {GraphicComponent, styles} from './graphic.js'
@@ -40,8 +40,8 @@ class HavesAndWants extends GraphicComponent {
 						found in {formatNumber(masters[0].community.have)} collections.
 					</p>
 					<p>
-						The <span style={{"color": "#5e97f6"}}>blue</span> points mark how many collections a release
-						has been added to while the <span style={{"color": "#db4437"}}>red</span> points show how many
+						The <Blue content={"blue"} /> points mark how many collections a release
+						has been added to while the <Red content={"red"} /> points show how many
 						wantlists the release can be found in. You can click on each point to see more information about
 						that release.
 					</p>
@@ -93,8 +93,8 @@ class HavesAndWants extends GraphicComponent {
 					</p>
 					<p>
 						Here releases that are in more wantlists than in collections
-						are <span style={{"color": "#db4437"}}>red</span> while releases that are in more collections
-						than in wantlists are <span style={{"color": "#5e97f6"}}>blue</span>.
+						are <Red content={"red"} /> while releases that are in more collections
+						than in wantlists are <Blue content={"blue"} />.
 					</p>
 					<p>
 						The correlation between the number of versions and collection additions is {correlation},

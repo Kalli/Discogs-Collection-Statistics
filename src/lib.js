@@ -1,6 +1,19 @@
 import {Step} from "react-scrollama"
-import React from "react"
+import React, {Component} from "react"
 import classnames from 'classnames'
+
+export class Blue extends Component{
+	render(){
+		return <span style={{"color": "#5e97f6"}}>{this.props.content}</span>
+	}
+}
+
+export class Red extends Component{
+	render(){
+		return <span style={{"color": "#db4437"}}>{this.props.content}</span>
+	}
+}
+
 
 export function createArtistLink(artists){
 	return artists.reduce(function(artistLink, artist, idx){

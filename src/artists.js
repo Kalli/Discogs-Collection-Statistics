@@ -1,6 +1,7 @@
 import {Chart} from 'react-google-charts';
 import React from "react"
 import {closeTooltipsOnClicks, groupByArtist, formatNumber, pearsonCorrelation, correlationCopy} from "./lib.js"
+import {Blue, Red} from "./lib.js"
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
 import {GraphicComponent, styles} from './graphic.js'
@@ -65,9 +66,9 @@ class Artists extends GraphicComponent {
 				paragraphs: <>
 					<p>
 						Let's move on to the artists. Here we've grouped all the master releases by the artist or band
-						behind them. This adds up the wants and haves for all the releases a certain artist has in the
-						top 250. Some artists appear in the top 250 many times, while other are closer to one hit
-						wonders.
+						behind them. This adds up the <Blue content={"wants"} /> and <Red content={"haves"} /> for all
+						the releases a certain artist has in the top 250. Some artists appear in the top 250 many
+						times, while other are closer to one hit wonders.
 					</p>
 					<p>
 						<span dangerouslySetInnerHTML={{__html: artists[0].artistLink}} /> top the list,
@@ -93,8 +94,7 @@ class Artists extends GraphicComponent {
 				paragraphs: <>
 					<p>
 						Now lets graph wants vs. haves to show us which artists are in more wantlists than
-						collections (<span style={{"color": "#db4437"}}>red</span>) and
-						vice versa (<span style={{"color": "#5e97f6"}}>blue</span>).
+						collections (<Red content={"red"} />) and  vice versa (<Blue content={"blue"} />).
 					</p>
 					<p>
 						The mean want to have ratio is {averageWantToHave}. That means that on average the
