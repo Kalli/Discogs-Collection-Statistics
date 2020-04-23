@@ -14,6 +14,17 @@ export class Red extends Component{
 	}
 }
 
+export class Artist extends Component{
+	render(){
+		return <span dangerouslySetInnerHTML={{__html: createArtistLink(this.props.artists)}} />
+	}
+}
+
+export class Master extends Component{
+	render(){
+		return <em><span dangerouslySetInnerHTML={{__html: createMasterLink(this.props.master)}} /></em>
+	}
+}
 
 export function createArtistLink(artists){
 	return artists.reduce(function(artistLink, artist, idx){

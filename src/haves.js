@@ -1,7 +1,7 @@
 import React from "react"
 import {Chart} from 'react-google-charts';
-import {renderReleaseCard, closeTooltipsOnClicks, formatNumber, createArtistLink, createMasterLink} from "./lib.js"
-import {correlationCopy, pearsonCorrelation, Blue, Red} from "./lib.js"
+import {renderReleaseCard, closeTooltipsOnClicks, formatNumber} from "./lib.js"
+import {correlationCopy, pearsonCorrelation, Blue, Red, Master, Artist} from "./lib.js"
 import injectSheet from 'react-jss';
 import classnames from 'classnames'
 import {GraphicComponent, styles} from './graphic.js'
@@ -27,6 +27,8 @@ class HavesAndWants extends GraphicComponent {
 	}
 
 	getSteps(correlation, averageWantToHave, masters){
+		const repeatArtist1 = masters[0].artists[0] === masters[1].artists[0] ? " again " : " "
+		const repeatArtist2 = masters[1].artists[0] === masters[2].artists[0] ||  masters[0].artists[0] === masters[2].artists[0] ? " again " : " "
 		return [
 			{
 				data: {'sort': 'have', 'type': 'community'},
@@ -34,10 +36,16 @@ class HavesAndWants extends GraphicComponent {
 					<p>
 						The first chart shows the top 250 most collected {this.props.genre} releases ordered by the
 						number of collections they appear in. Mouse over the chart to get more information on each data
-						point. In first place we've
-						got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[0])}} /> by
-						<span dangerouslySetInnerHTML={{__html: createArtistLink(masters[0].artists)}} /> which can be
-						found in {formatNumber(masters[0].community.have)} collections.
+						point.
+					</p>
+					<p>
+						In first place we've
+						got <Master master={masters[0]} /> by <Artist artists={masters[0].artists} /> which can be
+						found in {formatNumber(masters[0].community.have)} collections.{" "}
+						<Artist artists={masters[1].artists} /> {repeatArtist1} are the runner up
+						with <Master master={masters[1]} /> and in third place,
+						with {formatNumber(masters[2].community.have)} haves, <Master master={masters[2]} />
+						{repeatArtist2} by <Artist artists={masters[2].artists} />.
 					</p>
 					<p>
 						The <Blue content={"blue"} /> points mark how many collections a release
@@ -58,22 +66,25 @@ class HavesAndWants extends GraphicComponent {
 				data: {'sort': 'want', 'type': 'community'},
 				paragraphs: <>
 					<p>
-						Let's change the sorting to <i>wants</i> (the number of times a master release appears in users
+						Let's change the sorting to <Red content={"<i>haves</i>"} /> (the number of times a master release appears in users
 						want lists). For some releases the demand seems to far outweigh the supply, while for others
 						its vice versa.
 					</p>
 					<p>
-						Here <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[0])}} /> by
-						<span dangerouslySetInnerHTML={{__html: createArtistLink(masters[0].artists)}} /> tops the list
+						Here <Master master={masters[0]} /> by <Artist artists={masters[0].artists} />  tops the list
 						with {formatNumber(masters[0].community.want)} wantlist additions. After that we've
-						got <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[1])}} /> {" "}
-						by <span dangerouslySetInnerHTML={{__html: createArtistLink(masters[1].artists)}} /> and
-						the bronze is taken by <em dangerouslySetInnerHTML={{__html: createMasterLink(masters[2])}} />.
+						got <Master master={masters[1]} />  by <Artist artists={masters[1].artists} />
+						{repeatArtist1} and the bronze is taken by <Master master={masters[2]} />
+						{repeatArtist2} by <Artist artists={masters[0].artists} />.
 					</p>
 					<p>
-						The average want to have ratio is {averageWantToHave} and the correlation between wants
-						and haves is {correlation}, a {correlationCopy(correlation)} correlation. This is
-						apparent from the graph as well.
+						The average want to have ratio is {averageWantToHave} and the correlation<sup>*</sup> between
+						wants and haves is {correlation}, a {correlationCopy(correlation)} correlation. This is also
+						apparent from the graph.
+					</p>
+					<p className={"small"}>
+						<sup>*</sup>Using <a href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">
+						Pearson correlation coefficient</a>.
 					</p>
 				</>
 			}, {
