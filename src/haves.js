@@ -140,7 +140,7 @@ class HavesAndWants extends GraphicComponent {
 		}else{
 			headers = [
 				{id: 'position', label: 'position', type: 'number'},
-				{id: 'haves', label: this.state.sort + 's', type: 'number'},
+				{id: 'haves', label: 'Haves', type: 'number'},
 				{type: 'string', role: 'tooltip', 'p': {'html': true}},
 				{id: 'wants', label: 'Wants', type: 'number'},
 				{type: 'string', role: 'tooltip', 'p': {'html': true}}
