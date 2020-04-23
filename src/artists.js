@@ -90,7 +90,7 @@ class Artists extends GraphicComponent {
 				</>
 			},
 			{
-				data: {'sort': 'have', 'changeSize': false},
+				data: {'sort': 'haves-wants', 'changeSize': false},
 				paragraphs: <>
 					<p>
 						Now lets graph wants vs. haves to show us which artists are in more wantlists than

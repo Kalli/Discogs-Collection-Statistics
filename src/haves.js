@@ -66,9 +66,9 @@ class HavesAndWants extends GraphicComponent {
 				data: {'sort': 'want', 'type': 'community'},
 				paragraphs: <>
 					<p>
-						Let's change the sorting to <Red content={"haves"} /> (the number of times a master release appears in users
-						want lists). For some releases the demand seems to far outweigh the supply, while for others
-						its vice versa.
+						Let's change the sorting to <Red content={"wants"} /> (the number of times a master release
+						appears in users want lists). For some releases the demand seems to far outweigh the supply,
+						while for others its vice versa.
 					</p>
 					<p>
 						Here <Master master={masters[0]} /> by <Artist artists={masters[0].artists} />  tops the list
@@ -217,7 +217,7 @@ class HavesAndWants extends GraphicComponent {
 				legend: legend,
 				theme: 'material',
 				tooltip: {isHtml: true, trigger: 'both'},
-				animation: {duration: 1500},
+				animation: {duration: 3500},
 				pointSize: 5,
 				isStacked: 'relative',
 				chartArea: {'width': '80%', 'height': '75%'},
