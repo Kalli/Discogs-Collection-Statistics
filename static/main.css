@@ -68,7 +68,7 @@ text {
 .interlude{
     height: 10vh;
     width: 100%;
-    background-attachment: fixed;
+    background-attachment: fixed!important;
 }
 
 .intro-text, .outro-text{
