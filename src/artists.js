@@ -97,7 +97,7 @@ class Artists extends GraphicComponent {
 						collections (<Red content={"red"} />) and  vice versa (<Blue content={"blue"} />).
 					</p>
 					<p>
-						The mean want to have ratio is {averageWantToHave}. That means that on average the
+						The mean <em>want to have</em> ratio is {averageWantToHave}. That means that on average the
 						releases from these artists can be found in more
 						{averageWantToHave > 1? " wantlists than collections" : " collections than wantlists" }.
 						The correlation between wants and haves is {correlation},
@@ -108,15 +108,16 @@ class Artists extends GraphicComponent {
 			{
 				data: {'sort': 'haves-wants', 'changeSize': true},
 				paragraphs: <>
-						<p>
-							For further clarity let's adjust the size of each point to reflect how many releases
-							that artist has in the top 250. This shows us that the artists taking the top spots are
-							also those that have the most releases.
-						</p>
-						<p>
-							This makes sense, only a serious one hit wonder release could outweigh the cumulative
-							wants and have of artists with many releases in the top list.
-						</p>
+					<p>
+						For further clarity let's adjust the size of each point to reflect how many releases
+						that artist has in the top 250. This shows us that the artists taking the top spots are
+						also those that have the most releases among the most collected.
+					</p>
+					<p>
+						This makes sense, only a serious one hit wonder release could outweigh the cumulative
+						<Red content={"wants"} /> and <Blue content={"haves"} /> of artists with many releases
+						in the top list.
+					</p>
 				</>
 			}
 		]
@@ -180,7 +181,7 @@ class Artists extends GraphicComponent {
 		const correlation = pearsonCorrelation(artists.map(x => x.have), artists.map(x => x.want)).toFixed(2)
 		const scrollama = this.createScrollama(this.getSteps(artists, averageWantToHave, correlation))
 
-		const title = `Most Collected ${this.props.genre} Master Releases - By Artist `
+		const title = `Most Collected ${this.props.genre} Master Releases - by Artist `
 
 		if (this.state.sort !== "haves-wants"){
 			hAxis.viewWindow = {max: data.length}

@@ -75,7 +75,7 @@ export class TimeLine extends GraphicComponent{
 				data: {},
 				paragraphs: <>
 					<p>
-                        We can further examine the history with this timeline for all the artists that have a release in
+                        We can further examine the history with this timeline for all the artists who have a release in
 						the top 250.
 					</p>
 					<p>

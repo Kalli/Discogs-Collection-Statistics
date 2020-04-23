@@ -26,14 +26,14 @@ export class ArtistsByGender extends GraphicComponent {
 				data: {},
 				paragraphs: <>
 					<p>
-						MusicBrainz has information on artist and band
-						members <a href="https://wiki.musicbrainz.org/Artist#Gender" target="_blank">genders</a> in
-						a lot of cases though that information hasn't been entered for all artists.
+						MusicBrainz also has information on artist and band
+						members <a href="https://wiki.musicbrainz.org/Artist#Gender" target="_blank">genders</a> although
+						in a lot of cases though that information hasn't been entered.
 					</p>
 					<p>
 						The collections of Discogs users seem to skew pretty heavily towards music by men,
 						across genres and styles. I wonder if this is a sign of the tastes of Discogs' user base or if
-						it reflects a male dominated music industry in general, my guess it is a fair bit of both.
+						it reflects a male dominated music industry in general, my guess it is a bit of both.
 					</p>
 				</>
 			}

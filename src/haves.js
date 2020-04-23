@@ -78,9 +78,9 @@ class HavesAndWants extends GraphicComponent {
 						{repeatArtist2} by <Artist artists={masters[0].artists} />.
 					</p>
 					<p>
-						The average want to have ratio is {averageWantToHave} and the correlation<sup>*</sup> between
-						wants and haves is {correlation}, a {correlationCopy(correlation)} correlation. This is also
-						apparent from the graph.
+						The average <em>want-to-have</em> ratio is {averageWantToHave} and the
+						correlation<sup>*</sup> between wants and haves is {correlation},
+						a {correlationCopy(correlation)} correlation. This is also apparent from the graph.
 					</p>
 					<p className={"small"}>
 						<sup>*</sup>Using <a href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">
@@ -109,9 +109,9 @@ class HavesAndWants extends GraphicComponent {
 					</p>
 					<p>
 						The correlation between the number of versions and collection additions is {correlation},
-						a {correlationCopy(correlation)} correlation. At first you might assume that more versions
+						a {correlationCopy(correlation)} relationship. At first you might assume that more versions
 						would always mean more collection placements and wantlist additions, but that does not hold for
-						all genres. Some releases have been reissued many times but in small runs, while others
+						all genres. Some releases have been reissued many times but in small runs while others
 						had big initial releases but not a lot of subsequent interest.
 					</p>
 				</>
@@ -134,7 +134,7 @@ class HavesAndWants extends GraphicComponent {
 				{type: 'string', role: 'tooltip', 'p': {'html': true}},
 				{type: 'string', role: 'style'}
 			]
-			title +=  ` - By Number of Versions and ${this.state.sort.toTitleCase()}s`
+			title +=  ` - by Number of Versions and ${this.state.sort.toTitleCase()}s`
 			hAxis = {title: 'Versions'}
 			vAxis = {title: this.state.sort.toTitleCase() + 's', format: 'short'}
 		}else{
@@ -145,7 +145,7 @@ class HavesAndWants extends GraphicComponent {
 				{id: 'wants', label: 'Wants', type: 'number'},
 				{type: 'string', role: 'tooltip', 'p': {'html': true}}
 			]
-			title +=  ' - By Haves and Wants'
+			title +=  ' - by Haves and Wants'
 			hAxis = {title: 'Position'}
 			vAxis = {title: 'Count', format: 'short', viewWindow: {min: 0}}
 		}

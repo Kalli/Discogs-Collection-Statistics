@@ -39,25 +39,43 @@ export class ArtistsByCountry extends GraphicComponent {
 		}, [])
 	}
 
-	getSteps(){
+	getSteps(countryData){
+		const numCountries = countryData.reduce((acc, e) => {
+			if (!["undefined", "null"].includes(e[0])){
+				acc += 1
+			}
+			return acc
+		}, 0)
+		const unidentified = countryData.reduce((acc, e) => {
+			if (["undefined", "null"].includes(e[0])){
+				acc += e[1]
+			}
+			return acc
+		}, 0)
 		return [
 			{
 				data: {},
 				paragraphs: <>
 					<p>
-						This chart shows us how where the bands and artists behind the most collected releases are from.
+						This chart shows us where the bands and artists behind the most collected releases are from.
 						Unsurprisingly artists from English speaking countries score highly in these charts.
 					</p>
 					<p>
 						I'd imagine this is because the United Kingdom and the US dominate popular music in the latter
-						half of the 20th century and the beginning of the 21st. Discogs being an American company
-						probably also plays a part in terms of the user base.
+						half of the 20th century and the beginning of the 21st. The fact that Discogs is an American company
+						probably also plays a part in terms of its user base.
 					</p>
 				</>
 			},
 			{
 				data: {},
 				paragraphs: <>
+					<p>
+						This geographic data comes from <a href="https://wiki.musicbrainz.org/Artist#Area">MusicBrainz</a> and
+						indicates "the area with which an artist is primarily identified with". There
+						are {unidentified} artists with no identified country while the rest of the artists
+						are from {numCountries} different countries.
+					</p>
 					<p>
 						If you switch between genres this chart changes quite a bit. The United States for example
 						mostly owns hip hop, Germany flexes its techno muscle while the UK prevails in drum & bass
@@ -71,17 +89,13 @@ export class ArtistsByCountry extends GraphicComponent {
 
 	render() {
 		const { classes } = this.props;
-		const scrollama = this.createScrollama(this.getSteps())
+		const countryData = this.groupByCountry(Object.values(this.props.data.artists))
+		const scrollama = this.createScrollama(this.getSteps(countryData))
 		const options = this.graphicOptions({
 			height: 700,
 			className: "center-block",
 			chartType: "GeoChart",
-			data:
-				[
-					["Country", "Count", {type: 'string', role: 'tooltip', 'p': {'html': true}}],
-					...this.groupByCountry(Object.values(this.props.data.artists))
-				]
-			,
+			data: [["Country", "Count", {type: 'string', role: 'tooltip', 'p': {'html': true}}], ...countryData],
 			options: {
 				colorAxis: {minValue: 1, colors: [this.tertiaryColor, this.secondaryColor]},
 				tooltip: {isHtml: true, trigger: 'selection'},

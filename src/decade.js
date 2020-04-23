@@ -66,7 +66,7 @@ export class Decades extends GraphicComponent{
 				data: {'type': 'Year'},
 				paragraphs: <>
 					<p>
-						This is what things look like if we break the releases down by the year they came out.
+						If we break the releases down by the year they came out it looks like this.
 					</p>
 					{this.state.type === "Year" &&
 					<p>

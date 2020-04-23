@@ -62,6 +62,10 @@ text {
     font-size: 1.2em;
 }
 
+.small, small {
+    font-size: 65%;
+}
+
 .interlude{
     height: 10vh;
     width: 100%;
