@@ -52,7 +52,7 @@ class App extends Component{
 
 		window.setTimeout(()=>{
 			Array.from(document.getElementsByClassName('background')).forEach((element) => {
-			element.style.backgroundImage = `url("${image}montage.jpg")`
+			element.style.backgroundImage = `url("${image}montage.jpg") no-repeat center`
 		})}, 500)
 
 		window.setTimeout(()=>{this.setState({fade: "fade-in"})}, 500)
@@ -162,7 +162,7 @@ class App extends Component{
 								On this page I've gathered data on on the 250 most collected and coveted music releases
 								on Discogs. Hopefully it will provide insight into questions like: how many users have
 								added each release to their collection? Who are the artists and bands behind these
-								recordings? Where do they come from? When did this releases come out and which
+								recordings? Where do they come from? When did these releases come out and which
 								genres and styles do they belong to?
 							</p>
 							<p>
