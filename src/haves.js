@@ -66,7 +66,7 @@ class HavesAndWants extends GraphicComponent {
 				data: {'sort': 'want', 'type': 'community'},
 				paragraphs: <>
 					<p>
-						Let's change the sorting to <Red content={"<i>haves</i>"} /> (the number of times a master release appears in users
+						Let's change the sorting to <Red content={"haves"} /> (the number of times a master release appears in users
 						want lists). For some releases the demand seems to far outweigh the supply, while for others
 						its vice versa.
 					</p>

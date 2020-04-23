@@ -352,6 +352,26 @@ Note: Beware of modifying this element as it can break the animations - you shou
     }
 }
 @media (max-width: 991.98px) {
+    .navbar{
+        height: 5vh;
+        padding-top: 1vh;
+        padding-bottom: 1vh;
+    }
+
+    .bm-burger-button {
+        position: fixed;
+        width: 24px;
+        height: 20px;
+        left: 24px;
+        top: 45px;
+    }
+
+    .bm-menu {
+        background-color: var(--first-bg-color);
+        padding: 1.5em 0.5em 0;
+        font-size: 1.4em;
+        z-index: 100;
+    }
 
     .scroller{
         /* Allow clicking on the graphic layer underneath*/
