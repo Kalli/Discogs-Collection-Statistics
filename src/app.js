@@ -47,12 +47,9 @@ class App extends Component{
     changeBackgroundImage(){
 		const image = this.state.genre.replace("most-collected-", "").replace("masters.json", "")
 		this.setState({fade: "fade-out"})
-		const img = new Image()
-		img.url = image+"montage.jpg"
-
 		window.setTimeout(()=>{
 			Array.from(document.getElementsByClassName('background')).forEach((element) => {
-			element.style.backgroundImage = `url("${image}montage.jpg") no-repeat center`
+			element.style.background = `url("${image}montage.jpg") no-repeat center`
 		})}, 500)
 
 		window.setTimeout(()=>{this.setState({fade: "fade-in"})}, 500)
