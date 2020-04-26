@@ -179,7 +179,7 @@ export class GenresAndStyles extends GraphicComponent{
 				},
 				chartArea: {height: this.state.genre.areaHeight, width: '90%', top: '5%'},
 				title: `Most Collected ${this.props.genre} Releases by Genre`,
-				animation: {duration: 1500},
+				animation: {duration: 2000},
 				bar: {groupWidth: "95%"},
 				headerHeight: 15,
 				fontColor: "black",

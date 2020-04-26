@@ -99,7 +99,7 @@ export class Decades extends GraphicComponent{
 			data: [headers, ...data],
 			options: {
 				title: `Most Collected ${this.props.genre} Master Releases - By ${this.state.type} Released`,
-				animation: {duration: 1500},
+				animation: {duration: 2000},
 				legend: { position: 'bottom' },
 				theme: 'material',
 				tooltip: {isHtml: true, trigger: 'selection'},

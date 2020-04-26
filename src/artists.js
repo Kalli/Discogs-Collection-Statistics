@@ -220,7 +220,7 @@ class Artists extends GraphicComponent {
 				</label>
 			</div>
 		const legend = this.state.sort === "haves-wants" ? 'none' : { position: 'bottom' }
-		const duration = (0 === this.state.size || this.state.size === 100) ? 1000 : 0
+		const duration = (0 === this.state.size || this.state.size === 100) ? 2000 : 0
 
 		const options = this.graphicOptions({
 			height: '80vh',

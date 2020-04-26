@@ -217,7 +217,7 @@ class HavesAndWants extends GraphicComponent {
 				legend: legend,
 				theme: 'material',
 				tooltip: {isHtml: true, trigger: 'both'},
-				animation: {duration: 3500},
+				animation: {duration: 2000},
 				pointSize: 5,
 				isStacked: 'relative',
 				chartArea: {'width': '80%', 'height': '75%'},
