@@ -59,7 +59,7 @@ class Artists extends GraphicComponent {
 		clearInterval(this.state.intervalId)
 	}
 
-	getSteps(artists, averageWantToHave, correlation){
+	getSteps(artists, averageWantToHave, averageReleases, correlation){
 		return [
 			{
 				data: {'sort': 'have', 'changeSize': false},
@@ -118,6 +118,10 @@ class Artists extends GraphicComponent {
 						<Red content={"wants"} /> and <Blue content={"haves"} /> of artists with many releases
 						in the top list.
 					</p>
+					<p>
+						In total {artists.length} artists have one or more releases in the top 250 and the average
+						number of releases per artist/band is {averageReleases}.
+					</p>
 				</>
 			}
 		]
@@ -164,6 +168,7 @@ class Artists extends GraphicComponent {
 			return b[this.state.sort] - a[this.state.sort]
 		})
 		const averageWantToHave = parseFloat(artists.reduce((acc, e) => acc + e.want/e.have, 0) / artists.length, 2).toFixed(2)
+		const averageReleases = parseFloat(artists.reduce((acc, e) => acc + e.masters.length, 0) / artists.length, 2).toFixed(2)
 
 		const data = artists.reduce((data, artist, index) => {
 			const tooltip = this.createArtistTooltip(artist, index)
@@ -179,7 +184,7 @@ class Artists extends GraphicComponent {
 		}, [])
 
 		const correlation = pearsonCorrelation(artists.map(x => x.have), artists.map(x => x.want)).toFixed(2)
-		const scrollama = this.createScrollama(this.getSteps(artists, averageWantToHave, correlation))
+		const scrollama = this.createScrollama(this.getSteps(artists, averageWantToHave, averageReleases, correlation))
 
 		const title = `Most Collected ${this.props.genre} Master Releases - by Artist `
 
