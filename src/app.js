@@ -109,7 +109,13 @@ class App extends Component{
 		document.title = title + "Discogs Collection Statistics | Lazily Evaluated"
 	}
 
-	navbar = (genreDropdown) => {
+	scrollIntoView = id => e => {
+		e.preventDefault()
+		const element = document.getElementById(id)
+		element.scrollIntoView({block: "start", behavior: "auto"})
+	}
+
+	navbar = (genreDropdown, clickHandler) => {
 	    const menuItems = [
 				"Intro",
 				"Haves and Wants",
@@ -127,7 +133,7 @@ class App extends Component{
 				<Menu className='pull-left nav-menu'>
 					<h3>Discogs Collection Statistics</h3>
 					<h4>Table of contents</h4>
-					{menuItems.map((e, index)=><a key={index} href={'#'+e[0]}>{e[1]}</a>)}
+					{menuItems.map((e, index)=><a key={index} href={'#'+e[0]} onClick={clickHandler(e[0])}>{e[1]}</a>)}
 					<hr/>
 					{genreDropdown}
 					<div className="footer small">
@@ -144,7 +150,7 @@ class App extends Component{
 
 		const genreName = this.state.genreName !== "All Genres"? this.state.genreName : ""
 		const genreDropDown = <GenreDropdown genres={this.genres} genre={this.state.genreName} changeHandler={this.handleGenreChange} />
-		const header = this.navbar(genreDropDown)
+		const header = this.navbar(genreDropDown, this.scrollIntoView)
 		const havesAndWants = !this.state.loading && <StyledHavesAndWants data={this.state.data} genre={genreName}  offset={true} />
 		const artists = !this.state.loading && <StyledArtists data={this.state.data} genre={genreName} />
 		const genresAndStyles = !this.state.loading && <StyledGenresAndStyles data={this.state.data} genre={genreName} offset={true}/>
