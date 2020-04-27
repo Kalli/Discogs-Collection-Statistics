@@ -109,13 +109,7 @@ class App extends Component{
 		document.title = title + "Discogs Collection Statistics | Lazily Evaluated"
 	}
 
-	navbar = (genres) => {
-		const genreDropdown = <GenreDropdown
- 			genres={genres}
-			genre={this.state.genreName}
-		    changeHandler={this.handleGenreChange}
-	    />
-
+	navbar = (genreDropdown) => {
 	    const menuItems = [
 				"Intro",
 				"Haves and Wants",
@@ -149,7 +143,8 @@ class App extends Component{
 	render() {
 
 		const genreName = this.state.genreName !== "All Genres"? this.state.genreName : ""
-		const header = this.navbar(this.genres)
+		const genreDropDown = <GenreDropdown genres={this.genres} genre={this.state.genreName} changeHandler={this.handleGenreChange} />
+		const header = this.navbar(genreDropDown)
 		const havesAndWants = !this.state.loading && <StyledHavesAndWants data={this.state.data} genre={genreName}  offset={true} />
 		const artists = !this.state.loading && <StyledArtists data={this.state.data} genre={genreName} />
 		const genresAndStyles = !this.state.loading && <StyledGenresAndStyles data={this.state.data} genre={genreName} offset={true}/>
@@ -188,6 +183,9 @@ class App extends Component{
 								favourite styles and genres. Click the menu for more options and information.
 								I hope you enjoy it.
 							</p>
+							<div className={"text-center"}>
+								{genreDropDown}
+							</div>
 							<h3 className={'get-started text-center'}>
 								Scroll down to get started!
 							</h3>
