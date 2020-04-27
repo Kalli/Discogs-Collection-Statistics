@@ -66,7 +66,7 @@ class Artists extends GraphicComponent {
 				paragraphs: <>
 					<p>
 						Let's move on to the artists. Here we've grouped all the master releases by the artist or band
-						behind them. This adds up the <Blue content={"wants"} /> and <Red content={"haves"} /> for all
+						behind them. This adds up the <Red content={"wants"} /> and <Blue content={"haves"} /> for all
 						the releases a certain artist has in the top 250. Some artists appear in the top 250 many
 						times, while other are closer to one hit wonders.
 					</p>
@@ -114,7 +114,7 @@ class Artists extends GraphicComponent {
 						also those that have the most releases among the most collected.
 					</p>
 					<p>
-						This makes sense, only a serious one hit wonder release could outweigh the cumulative
+						This makes sense, only a serious one hit wonder release could outweigh the cumulative{" "}
 						<Red content={"wants"} /> and <Blue content={"haves"} /> of artists with many releases
 						in the top list.
 					</p>
