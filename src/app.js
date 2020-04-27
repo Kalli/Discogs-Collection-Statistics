@@ -29,10 +29,7 @@ class App extends Component{
 
 	constructor(props) {
         super(props)
-		const q = queryString()
-		const genre = this.genres[q["genre"]] ? this.genres[q["genre"]] : "most-collected-masters.json"
-		const genreName = this.genres[q["genre"]] ? q["genre"] : "All Genres"
-
+		const [genre, genreName] = this.queryStringState()
         this.state = {
         	toggle: true,
             loading: true,
@@ -89,12 +86,27 @@ class App extends Component{
 	        loading: true,
             data: this.loadData()
         })
+		window.onpopstate = this.onBackOrForwardButtonEvent
     }
+
+    onBackOrForwardButtonEvent = (e) => {
+		const [genre, genreName] = this.queryStringState()
+		this.setState({genre: genre, genreName: genreName, loading: true})
+	}
+
+	queryStringState(){
+		const q = queryString()
+		const genre = this.genres[q["genre"]] ? this.genres[q["genre"]] : "most-collected-masters.json"
+		const genreName = this.genres[q["genre"]] ? q["genre"] : "All Genres"
+		return [genre, genreName]
+	}
 
 	handleGenreChange = (e) => {
 		const qs = e.target.value !== "All Genres" ? "?genre="+e.target.value : ""
-		window.history.pushState(null, null, qs)
+		window.history.pushState(null, null , qs)
 		this.setState({genre: this.genres[e.target.value], genreName: e.target.value, loading: true})
+		const title = e.target.value !== "All Genres" ? "Exploring " + e.target.value + " Music | " : " "
+		document.title = title + "Discogs Collection Statistics | Lazily Evaluated"
 	}
 
 	navbar = (genres) => {
@@ -156,7 +168,7 @@ class App extends Component{
 								Discogs Collection Statistics
 							</h1>
 							<p className="lead text-center">
-								Exploring the Most Collected and Coveted {genreName} Records on Discogs
+								Exploring the Most Collected and Coveted {genreName} Records
 							</p>
 							<p>
 								<a href="http://www.discogs.com" target="_blank">Discogs</a> is a user built database
@@ -165,7 +177,7 @@ class App extends Component{
 								compilation of these want and have statistics can be found for every release on Discogs.
 							</p>
 							<p>
-								On this page I've gathered data on on the 250 most collected and coveted music releases
+								On this page I've gathered data on the 250 most collected and coveted music releases
 								on Discogs. Hopefully it will provide insight into questions like: how many users have
 								added each release to their collection? Who are the artists and bands behind these
 								recordings? Where do they come from? When did these releases come out and which
