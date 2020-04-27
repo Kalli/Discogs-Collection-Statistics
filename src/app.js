@@ -9,19 +9,40 @@ import {StyledArtists} from './artists.js'
 import {StyledArtistsByCountry} from './countries.js'
 import {StyledArtistsByGender} from './gender.js'
 import {StyledTimeLine} from "./timeline"
+import {queryString} from "./lib.js"
 
 
 class App extends Component{
+	genres = {
+		"All Genres": "most-collected-masters.json",
+		'Genres:': '',
+		"Electronic": "most-collected-electronic-masters.json",
+		"Hip Hop": "most-collected-hip-hop-masters.json",
+		"Jazz": "most-collected-jazz-masters.json",
+		'Styles:': '',
+		"Drum n Bass": "most-collected-electronic-drum-n-bass-masters.json",
+		"Dubstep": "most-collected-electronic-dubstep-masters.json",
+		"House": "most-collected-electronic-house-masters.json",
+		"Jungle": "most-collected-electronic-jungle-masters.json",
+		"Techno": "most-collected-electronic-techno-masters.json",
+	}
 
 	constructor(props) {
-        super(props);
+        super(props)
+		const q = queryString()
+		const genre = this.genres[q["genre"]] ? this.genres[q["genre"]] : "most-collected-masters.json"
+		const genreName = this.genres[q["genre"]] ? q["genre"] : "All Genres"
 
         this.state = {
         	toggle: true,
             loading: true,
-            genre: "most-collected-masters.json",
+            genre: genre,
+            genreName: genreName,
 			fade: ""
         }
+		if (genreName !== "All Genres"){
+			this.changeBackgroundImage()
+		}
     }
 
 	loadData() {
@@ -71,13 +92,15 @@ class App extends Component{
     }
 
 	handleGenreChange = (e) => {
-		this.setState({genre: e.target.value, loading: true})
+		const qs = e.target.value !== "All Genres" ? "?genre="+e.target.value : ""
+		window.history.pushState(null, null, qs)
+		this.setState({genre: this.genres[e.target.value], genreName: e.target.value, loading: true})
 	}
 
 	navbar = (genres) => {
-		const genreDropdown = this.state.loading ? "" : <GenreDropdown
+		const genreDropdown = <GenreDropdown
  			genres={genres}
-			genre={this.state.genre}
+			genre={this.state.genreName}
 		    changeHandler={this.handleGenreChange}
 	    />
 
@@ -112,23 +135,9 @@ class App extends Component{
 	}
 
 	render() {
-        const genres = [
-            ["All Genres", "most-collected-masters.json"],
-			['Genres:', ''],
-            ["Electronic", "most-collected-electronic-masters.json"],
-            ["Hip Hop", "most-collected-hip-hop-masters.json"],
-            ["Jazz", "most-collected-jazz-masters.json"],
-			['Styles:', ''],
-            ["Drum n Bass", "most-collected-electronic-drum-n-bass-masters.json"],
-            ["Dubstep", "most-collected-electronic-dubstep-masters.json"],
-            ["House", "most-collected-electronic-house-masters.json"],
-            ["Jungle", "most-collected-electronic-jungle-masters.json"],
-            ["Techno", "most-collected-electronic-techno-masters.json"],
-        ]
-		const selectedGenre = genres.filter(e => e[1] === this.state.genre)[0]
-		const genreName = selectedGenre[0] !== "All Genres" ? selectedGenre[0] : ""
 
-		const header = this.navbar(genres)
+		const genreName = this.state.genreName !== "All Genres"? this.state.genreName : ""
+		const header = this.navbar(this.genres)
 		const havesAndWants = !this.state.loading && <StyledHavesAndWants data={this.state.data} genre={genreName}  offset={true} />
 		const artists = !this.state.loading && <StyledArtists data={this.state.data} genre={genreName} />
 		const genresAndStyles = !this.state.loading && <StyledGenresAndStyles data={this.state.data} genre={genreName} offset={true}/>
@@ -147,7 +156,7 @@ class App extends Component{
 								Discogs Collection Statistics
 							</h1>
 							<p className="lead text-center">
-								Exploring the Most Collected and Coveted Records on Discogs
+								Exploring the Most Collected and Coveted {genreName} Records on Discogs
 							</p>
 							<p>
 								<a href="http://www.discogs.com" target="_blank">Discogs</a> is a user built database

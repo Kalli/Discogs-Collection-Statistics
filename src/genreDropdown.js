@@ -20,7 +20,7 @@ export class GenreDropdown extends Component {
                         onChange={this.props.changeHandler}
                         className={"form-control"}
                     >
-                        {this.props.genres.map((genre) => this.renderGenre(genre[1], genre[0]))}
+                        {Object.keys(this.props.genres).map((key) => this.renderGenre(this.props.genres[key], key))}
                     </select>
                 </label>
             </div>
@@ -31,7 +31,7 @@ export class GenreDropdown extends Component {
         const disabled = value === ''
         return (
             <option
-                value={value}
+                value={name}
                 disabled={disabled}
                 key={name}
             >

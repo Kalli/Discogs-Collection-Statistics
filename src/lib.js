@@ -1,6 +1,4 @@
-import {Step} from "react-scrollama"
 import React, {Component} from "react"
-import classnames from 'classnames'
 
 export class Blue extends Component{
 	render(){
@@ -141,14 +139,12 @@ export function correlationCopy(correlation){
 	return 'weak'
 }
 
-export function createSteps(classes, stepsData){
-	return stepsData.map((step) => {
-			return (
-			<Step data={step.data}>
-				<div className={classnames(classes.step, "step")}>
-					{step.paragraphs}
-				</div>
-			</Step>
-		)}
-	)
+
+export function queryString(){
+    const query = window.location.search.substring(1)
+    return query.split("&").reduce((acc, e) => {
+    	const [key, value] = e.split("=")
+    	acc[key] = decodeURIComponent(value)
+		return acc
+	}, {})
 }
