@@ -53,7 +53,7 @@ text {
 
 #intro, #outro{
     min-height: 100vh;
-    background-size: cover;
+    background-size: cover !important;
     padding: 10rem 1rem 1rem 1rem;
 }
 
@@ -351,6 +351,10 @@ Note: Beware of modifying this element as it can break the animations - you shou
     }
 }
 @media (max-width: 991.98px) {
+    .interlude{
+        background-attachment: scroll;
+    }
+
     .navbar{
         height: 5vh;
         padding-top: 1vh;
