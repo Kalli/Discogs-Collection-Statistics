@@ -75,7 +75,7 @@ class HavesAndWants extends GraphicComponent {
 						with {formatNumber(masters[0].community.want)} wantlist additions. After that we've
 						got <Master master={masters[1]} />  by <Artist artists={masters[1].artists} />
 						{repeatArtist1} and the bronze is taken by <Master master={masters[2]} />
-						{repeatArtist2} by <Artist artists={masters[0].artists} />.
+						{repeatArtist2} by <Artist artists={masters[2].artists} />.
 					</p>
 					<p>
 						The average <em>want-to-have</em> ratio is {averageWantToHave} and the
