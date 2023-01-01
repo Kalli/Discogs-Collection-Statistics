@@ -12,10 +12,10 @@
     "start": "webpack-dev-server --progress --inline"
   },
   "dependencies": {
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8.3.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "copy-webpack-plugin": "^4.5.4",
-    "css-loader": "^3.1.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.3",
     "intersection-observer": "^0.7.0",
     "lodash": "^4.17.13",
     "react": "^16.8.6",
@@ -24,9 +24,9 @@
     "react-dom": "^16.8.6",
     "react-google-charts": "^3.0.14",
     "react-scrollama": "^2.1.0",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.21.0",
-    "webpack-cli": "^3.1.2"
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
